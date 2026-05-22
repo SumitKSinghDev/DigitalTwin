@@ -13,17 +13,19 @@ const connectDB = async () => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     process.env.USE_MEMORY_DB = 'false';
   } catch (error) {
-    console.log('\n====================================================');
-    console.log('   [WARNING] DATABASE SERVER CONNECTIVITY OFFLINE   ');
-    console.log('====================================================');
-    console.log(' MongoDB local daemon is not running on port 27017.');
-    console.log(' >>> ACTIVATING RESILIENT LOCAL DB FALLBACK (db.json)');
-    console.log(' >>> The application will run in fully active mode!');
-    console.log('====================================================\n');
-    
-    // Set environment flag to true so Mongoose models pivot to mock operations
-    process.env.USE_MEMORY_DB = 'true';
-  }
+  console.log('\n====================================================');
+  console.log('   [WARNING] DATABASE SERVER CONNECTIVITY OFFLINE   ');
+  console.log('====================================================');
+
+  console.log('MongoDB connection error:');
+  console.error(error);
+
+  console.log(' >>> ACTIVATING RESILIENT LOCAL DB FALLBACK (db.json)');
+  console.log(' >>> The application will run in fully active mode!');
+  console.log('====================================================\n');
+
+  process.env.USE_MEMORY_DB = 'true';
+}
 };
 
 export default connectDB;
