@@ -233,14 +233,18 @@ const Auth = () => {
 
       const signInDiv = document.getElementById('googleSignInDiv');
       if (signInDiv) {
+        // Dynamically compute optimal button width to match form inputs exactly and prevent overflows
+        const parentWidth = signInDiv.parentElement ? signInDiv.parentElement.clientWidth : 384;
+        const buttonWidth = Math.max(200, Math.min(384, parentWidth));
+
         window.google.accounts.id.renderButton(
           signInDiv,
           {
-            theme: 'filled_black',
+            theme: 'outline',
             size: 'large',
             text: 'continue_with',
             shape: 'rectangular',
-            width: 350
+            width: buttonWidth
           }
         );
       }
@@ -709,16 +713,16 @@ const Auth = () => {
                 {/* Elegant separator */}
                 <div className="relative flex items-center justify-center my-6">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-zinc-900"></div>
+                    <div className="w-full border-t border-zinc-850"></div>
                   </div>
-                  <span className="relative px-3 bg-zinc-950 text-[9px] font-extrabold text-zinc-500 uppercase tracking-widest">
+                  <span className="relative px-3 bg-zinc-950 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                     Or Continue With
                   </span>
                 </div>
 
                 {/* Native Google OAuth Integration to avoid session overlay glitches */}
-                <div className="flex justify-center w-full min-h-[46px] rounded-xl overflow-hidden bg-[#0A0C10] border border-zinc-800 py-1 hover:border-zinc-700 hover:bg-[#0F1116] transition-all duration-200">
-                  <div id="googleSignInDiv" className="w-full flex justify-center scale-95 transition-all"></div>
+                <div className="flex justify-center w-full min-h-[44px]">
+                  <div id="googleSignInDiv" className="w-full flex justify-center"></div>
                 </div>
 
                 {/* Switch View Toggle Trigger */}
