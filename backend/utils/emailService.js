@@ -34,17 +34,19 @@ export const sendOtpEmail = async (email, otpCode, name = 'Student') => {
 
   try {
     const transporter = nodemailer.createTransport({
+      service: 'gmail',
       host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+      port: 465,
+      secure: true,
       family: 4,
       auth: {
         user,
         pass,
       },
       tls: {
-        rejectUnauthorized: false
-      }
+        rejectUnauthorized: false,
+      },
+      connectionTimeout: 10000,
     });
 
     const mailOptions = {

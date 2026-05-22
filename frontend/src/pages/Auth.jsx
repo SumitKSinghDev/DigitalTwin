@@ -68,6 +68,20 @@ const Auth = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
+  // Clean up localStorage and Google instances on mount to prevent auth button double-click errors
+  useEffect(() => {
+    localStorage.removeItem('student_twin_token');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    if (window.google && window.google.accounts && window.google.accounts.id) {
+      try {
+        window.google.accounts.id.cancel();
+      } catch (err) {
+        console.warn('Google Account sign out cancel error on mount:', err);
+      }
+    }
+  }, []);
+
   // Handle segmented OTP input changes and auto-focus shifting
   const handleOtpChange = (value, index) => {
     if (isNaN(value)) return;

@@ -71,9 +71,10 @@ export const registerUser = async (req, res) => {
       await sendOtpEmail(emailLower, otpCode, name);
 
       return res.status(200).json({
+        success: true,
         otpRequired: true,
         email: emailLower,
-        message: 'A verification code has been dispatched to your email.'
+        message: 'OTP sent successfully'
       });
     }
 
@@ -97,16 +98,24 @@ export const registerUser = async (req, res) => {
       // Dispatch OTP email
       await sendOtpEmail(emailLower, otpCode, name);
 
-      res.status(201).json({
+      return res.status(200).json({
+        success: true,
         otpRequired: true,
         email: emailLower,
-        message: 'Registration initialized. Please verify your email with the OTP sent.'
+        message: 'OTP sent successfully'
       });
     } else {
-      res.status(400).json({ message: 'Invalid user data provided' });
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Invalid user data provided' 
+      });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to send OTP',
+      error: error.message
+    });
   }
 };
 
@@ -193,12 +202,16 @@ export const resendOtp = async (req, res) => {
     // Dispatch OTP email
     await sendOtpEmail(emailLower, otpCode, user.name || user.username);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
-      message: 'A fresh verification code has been dispatched to your email.'
+      message: 'OTP sent successfully'
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to send OTP',
+      error: error.message
+    });
   }
 };
 

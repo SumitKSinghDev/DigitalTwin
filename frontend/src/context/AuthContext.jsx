@@ -148,6 +148,15 @@ export const AuthProvider = ({ children }) => {
   // Logout handler
   const logout = () => {
     localStorage.removeItem('student_twin_token');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    if (window.google && window.google.accounts && window.google.accounts.id) {
+      try {
+        window.google.accounts.id.cancel();
+      } catch (err) {
+        console.warn('Google Account sign out cancel error:', err);
+      }
+    }
     setUser(null);
   };
 
