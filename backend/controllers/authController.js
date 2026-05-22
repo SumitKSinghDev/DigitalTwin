@@ -149,6 +149,9 @@ export const verifyOtp = async (req, res) => {
       username: user.username || user.name,
       email: user.email,
       avatarStyle: user.avatarStyle,
+      isOnboarded: user.isOnboarded,
+      onboardingData: user.onboardingData,
+      twinPersonality: user.twinPersonality,
       token: generateToken(user._id),
       message: 'Account successfully verified and activated!'
     });
@@ -246,6 +249,9 @@ export const loginUser = async (req, res) => {
         username: user.username || user.name,
         email: user.email,
         avatarStyle: user.avatarStyle,
+        isOnboarded: user.isOnboarded,
+        onboardingData: user.onboardingData,
+        twinPersonality: user.twinPersonality,
         token: generateToken(user._id),
       });
     } else {
@@ -312,6 +318,9 @@ export const googleLogin = async (req, res) => {
       username: user.username || user.name,
       email: user.email,
       avatarStyle: user.avatarStyle,
+      isOnboarded: user.isOnboarded,
+      onboardingData: user.onboardingData,
+      twinPersonality: user.twinPersonality,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -352,6 +361,9 @@ export const updateAvatarStyle = async (req, res) => {
         username: updatedUser.username || updatedUser.name,
         email: updatedUser.email,
         avatarStyle: updatedUser.avatarStyle,
+        isOnboarded: updatedUser.isOnboarded,
+        onboardingData: updatedUser.onboardingData,
+        twinPersonality: updatedUser.twinPersonality,
       });
     } else {
       res.status(404).json({ message: 'User not found' });
@@ -370,6 +382,127 @@ export const resetDatabase = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'All platform user profiles, study logs, and goal records have been wiped successfully.'
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Submit user onboarding answers & generate twin personality
+// @route   PUT /api/auth/onboarding
+// @access  Private
+export const submitOnboarding = async (req, res) => {
+  try {
+    const {
+      studyGoals,
+      preferredStudyTiming,
+      sleepTargets,
+      academicInterests,
+      burnoutSensitivity,
+      productivityStyle
+    } = req.body;
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Set onboardingData
+    user.onboardingData = {
+      studyGoals: studyGoals || '',
+      preferredStudyTiming: preferredStudyTiming || 'Night',
+      sleepTargets: Number(sleepTargets || 8),
+      academicInterests: academicInterests || '',
+      burnoutSensitivity: burnoutSensitivity || 'Medium',
+      productivityStyle: productivityStyle || 'Deep Focus Sprints'
+    };
+
+    // Calculate Twin Personality Archetype
+    let archetype = "Balanced Cognitive Synthesizer";
+    let strengths = [
+      "Steady mid-day learning focus",
+      "High resilience to multitasking friction",
+      "Balanced sleep and study buffers"
+    ];
+    let weaknesses = [
+      "Vulnerable to screen distraction drift",
+      "Slow initiation momentum on complex tasks",
+      "Requires explicit visual targets"
+    ];
+
+    const timing = (preferredStudyTiming || '').toLowerCase();
+    const style = (productivityStyle || '').toLowerCase();
+    const sensitivity = (burnoutSensitivity || '').toLowerCase();
+
+    if (timing.includes('night') && (style.includes('deep') || style.includes('analytical'))) {
+      archetype = "Night-Focused Analytical Learner";
+      strengths = [
+        "Elite night cognitive stamina",
+        "High structural coding & problem solving flow",
+        "Excellent complex math modeling"
+      ];
+      weaknesses = [
+        "High screen fatigue trigger risk",
+        "Vulnerable to sudden morning sleep crashes",
+        "Delayed social recovery index"
+      ];
+    } else if (timing.includes('morning') && (style.includes('pomodoro') || style.includes('consistent'))) {
+      archetype = "Adaptive Consistency Strategist";
+      strengths = [
+        "Elite early circadian focus index",
+        "High habit automaticity & streak preservation",
+        "Fast task prioritization recovery"
+      ];
+      weaknesses = [
+        "Vulnerable to late afternoon cognitive drop-offs",
+        "High task friction under sudden stress",
+        "Rigid scheduling volatility"
+      ];
+    } else if (sensitivity.includes('high')) {
+      archetype = "High-Intensity Sprint & Recovery Type";
+      strengths = [
+        "Exceptional high-pressure sprint output",
+        "Creative problem solving under deadline load",
+        "Intuitive logic mapping"
+      ];
+      weaknesses = [
+        "Rapid exhaustion recovery timelines",
+        "High stress correlation with sleep drop-offs",
+        "Stamina volatility over 4+ hours"
+      ];
+    }
+
+    user.twinPersonality = {
+      archetype,
+      strengths,
+      weaknesses
+    };
+
+    user.isOnboarded = true;
+    
+    // Auto-update user's avatar colorTheme depending on archetype
+    if (archetype === "Night-Focused Analytical Learner") {
+      user.avatarStyle.colorTheme = "purple";
+    } else if (archetype === "Adaptive Consistency Strategist") {
+      user.avatarStyle.colorTheme = "indigo";
+    } else if (archetype === "High-Intensity Sprint & Recovery Type") {
+      user.avatarStyle.colorTheme = "amber";
+    } else {
+      user.avatarStyle.colorTheme = "indigo";
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name || updatedUser.username,
+      username: updatedUser.username || updatedUser.name,
+      email: updatedUser.email,
+      avatarStyle: updatedUser.avatarStyle,
+      isOnboarded: updatedUser.isOnboarded,
+      onboardingData: updatedUser.onboardingData,
+      twinPersonality: updatedUser.twinPersonality,
+      token: generateToken(updatedUser._id)
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

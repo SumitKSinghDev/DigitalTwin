@@ -106,7 +106,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
         {/* Page Title Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-white bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400 bg-clip-text text-transparent">
               Daily Telemetry Log
             </h1>
             <p className="text-zinc-500 text-sm mt-1">
@@ -115,14 +115,14 @@ const Tracker = ({ triggerTwinRefresh }) => {
           </div>
           
           {/* Date Picker Component */}
-          <div className="flex items-center gap-3 bg-zinc-900/60 border border-zinc-800/80 rounded-xl px-4 py-2.5 backdrop-blur-md">
+          <div className="flex items-center gap-3 bg-bg-secondary border border-border rounded-xl px-4 py-2.5 backdrop-blur-md">
             <Calendar className="w-4 h-4 text-primary" />
             <input
               type="date"
               value={date}
               max={getLocalDateString(new Date())}
               onChange={(e) => setDate(e.target.value)}
-              className="bg-transparent text-sm text-zinc-100 font-semibold focus:outline-none cursor-pointer"
+              className="bg-transparent text-sm text-zinc-800 dark:text-zinc-100 font-semibold focus:outline-none cursor-pointer"
             />
           </div>
         </div>
@@ -138,8 +138,8 @@ const Tracker = ({ triggerTwinRefresh }) => {
           <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* LEFT COLUMN: Numeric sliders for intensity and recovery */}
-            <div className="glass-panel border border-zinc-800/80 rounded-2xl p-6 space-y-6">
-              <h2 className="text-lg font-bold text-white border-b border-zinc-800/80 pb-3 flex items-center gap-2">
+            <div className="glass-panel-elevated panel-tint-lavender p-6 space-y-6">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white border-b border-border pb-3 flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-primary" />
                 <span>Study Metrics</span>
               </h2>
@@ -147,11 +147,11 @@ const Tracker = ({ triggerTwinRefresh }) => {
               {/* Study Hours Slider */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
                     <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Study Hours</span>
                   </label>
-                  <span className="text-sm font-extrabold text-indigo-400 px-2 py-0.5 bg-indigo-500/10 rounded-lg border border-indigo-500/25">
+                  <span className="text-sm font-extrabold text-indigo-500 dark:text-indigo-400 px-2 py-0.5 bg-indigo-500/10 rounded-lg border border-indigo-500/25">
                     {studyHours} hrs
                   </span>
                 </div>
@@ -162,7 +162,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
                   step="0.5"
                   value={studyHours}
                   onChange={(e) => setStudyHours(parseFloat(e.target.value))}
-                  className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                  className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-600 font-semibold">
                   <span>0 hrs</span>
@@ -176,11 +176,11 @@ const Tracker = ({ triggerTwinRefresh }) => {
               {/* Focus Level Slider */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
                     <Brain className="w-3.5 h-3.5 text-accent-violet" />
                     <span>Focus Quality</span>
                   </label>
-                  <span className="text-sm font-extrabold text-accent-violet px-2 py-0.5 bg-violet-500/10 rounded-lg border border-violet-500/25">
+                  <span className="text-sm font-extrabold text-violet-600 dark:text-accent-violet px-2 py-0.5 bg-violet-500/10 rounded-lg border border-violet-500/25">
                     {focusLevel} / 10
                   </span>
                 </div>
@@ -190,9 +190,9 @@ const Tracker = ({ triggerTwinRefresh }) => {
                   max="10"
                   value={focusLevel}
                   onChange={(e) => setFocusLevel(parseInt(e.target.value))}
-                  className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-violet-500"
+                  className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-violet-500"
                 />
-                <div className="flex justify-between text-[10px] text-zinc-600 font-semibold">
+                <div className="flex justify-between text-[10px] text-zinc-500 dark:text-zinc-600 font-semibold">
                   <span>1 (Distracted)</span>
                   <span>5 (Average)</span>
                   <span>10 (Flow State)</span>
@@ -201,8 +201,8 @@ const Tracker = ({ triggerTwinRefresh }) => {
             </div>
 
             {/* RIGHT COLUMN: Physical Recovery sliders */}
-            <div className="glass-panel border border-zinc-800/80 rounded-2xl p-6 space-y-6">
-              <h2 className="text-lg font-bold text-white border-b border-zinc-800/80 pb-3 flex items-center gap-2">
+            <div className="glass-panel-elevated panel-tint-lavender p-6 space-y-6">
+              <h2 className="text-lg font-bold text-zinc-900 dark:text-white border-b border-border pb-3 flex items-center gap-2">
                 <Moon className="w-4 h-4 text-accent-emerald" />
                 <span>Wellness & Balance</span>
               </h2>
@@ -210,11 +210,11 @@ const Tracker = ({ triggerTwinRefresh }) => {
               {/* Sleep Hours Slider */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
                     <Moon className="w-3.5 h-3.5 text-accent-emerald" />
                     <span>Sleep Rested</span>
                   </label>
-                  <span className="text-sm font-extrabold text-accent-emerald px-2 py-0.5 bg-emerald-500/10 rounded-lg border border-emerald-500/25">
+                  <span className="text-sm font-extrabold text-emerald-600 dark:text-accent-emerald px-2 py-0.5 bg-emerald-500/10 rounded-lg border border-emerald-500/25">
                     {sleepHours} hrs
                   </span>
                 </div>
@@ -225,9 +225,9 @@ const Tracker = ({ triggerTwinRefresh }) => {
                   step="0.5"
                   value={sleepHours}
                   onChange={(e) => setSleepHours(parseFloat(e.target.value))}
-                  className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                  className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
                 />
-                <div className="flex justify-between text-[10px] text-zinc-600 font-semibold">
+                <div className="flex justify-between text-[10px] text-zinc-500 dark:text-zinc-600 font-semibold">
                   <span>0 hrs (None)</span>
                   <span>6 hrs</span>
                   <span>8 hrs (Optimal)</span>
@@ -238,16 +238,16 @@ const Tracker = ({ triggerTwinRefresh }) => {
               {/* Stress Level Slider */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
                     <Activity className="w-3.5 h-3.5 text-accent-rose" />
                     <span>Stress Level</span>
                   </label>
                   <span className={`text-sm font-extrabold px-2 py-0.5 rounded-lg border ${
                     stressLevel > 7 
-                      ? 'bg-rose-500/15 border-rose-500/30 text-accent-rose'
+                      ? 'bg-rose-500/15 border-rose-500/30 text-rose-600 dark:text-accent-rose'
                       : stressLevel > 4
-                      ? 'bg-amber-500/15 border-amber-500/30 text-accent-amber'
-                      : 'bg-emerald-500/15 border-emerald-500/30 text-accent-emerald'
+                      ? 'bg-amber-500/15 border-amber-500/30 text-amber-600 dark:text-accent-amber'
+                      : 'bg-emerald-500/15 border-emerald-500/30 text-emerald-600 dark:text-accent-emerald'
                   }`}>
                     {stressLevel} / 10
                   </span>
@@ -258,9 +258,9 @@ const Tracker = ({ triggerTwinRefresh }) => {
                   max="10"
                   value={stressLevel}
                   onChange={(e) => setStressLevel(parseInt(e.target.value))}
-                  className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-rose-500"
+                  className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-rose-500"
                 />
-                <div className="flex justify-between text-[10px] text-zinc-600 font-semibold">
+                <div className="flex justify-between text-[10px] text-zinc-500 dark:text-zinc-600 font-semibold">
                   <span>1 (Serene)</span>
                   <span>5 (Moderate)</span>
                   <span>10 (Overwhelmed)</span>
@@ -269,11 +269,11 @@ const Tracker = ({ triggerTwinRefresh }) => {
             </div>
 
             {/* FULL WIDTH SPANS: Task ratios and notes */}
-            <div className="md:col-span-2 glass-panel border border-zinc-800/80 rounded-2xl p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="md:col-span-2 glass-panel-elevated panel-tint-neutral p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
               
               {/* Task Completed Inputs */}
               <div className="md:col-span-1 space-y-4">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2 border-b border-zinc-800/80 pb-2">
+                <h3 className="text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2 border-b border-border pb-2">
                   <CheckSquare className="w-4 h-4 text-indigo-400" />
                   <span>Tasks Finished</span>
                 </h3>
@@ -309,7 +309,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
 
               {/* Text Notes */}
               <div className="md:col-span-2 space-y-3">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2 border-b border-zinc-800/80 pb-2">
+                <h3 className="text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2 border-b border-border pb-2">
                   <FileText className="w-4 h-4 text-accent-violet" />
                   <span>Subject Logs / Core Notes</span>
                 </h3>

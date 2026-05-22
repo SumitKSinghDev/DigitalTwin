@@ -108,11 +108,11 @@ const Goals = ({ triggerGoalsRefresh }) => {
   // Category styles dictionary
   const getCategoryStyles = (cat) => {
     switch (cat) {
-      case 'Study': return 'bg-indigo-500/10 border-indigo-500/25 text-indigo-400';
-      case 'Wellness': return 'bg-emerald-500/10 border-emerald-500/25 text-emerald-400';
-      case 'Project': return 'bg-violet-500/10 border-violet-500/25 text-violet-400';
-      case 'Career': return 'bg-amber-500/10 border-amber-500/25 text-amber-400';
-      default: return 'bg-zinc-800 border-zinc-700 text-zinc-300';
+      case 'Study': return 'bg-indigo-500/10 border-indigo-500/25 text-indigo-600 dark:text-indigo-400';
+      case 'Wellness': return 'bg-emerald-500/10 border-emerald-500/25 text-emerald-600 dark:text-accent-emerald';
+      case 'Project': return 'bg-violet-500/10 border-violet-500/25 text-violet-600 dark:text-accent-violet';
+      case 'Career': return 'bg-amber-500/10 border-amber-500/25 text-amber-600 dark:text-accent-amber';
+      default: return 'bg-bg-secondary border-border text-zinc-750 dark:text-zinc-300';
     }
   };
 
@@ -134,7 +134,7 @@ const Goals = ({ triggerGoalsRefresh }) => {
         {/* Title Header */}
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-white bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400 bg-clip-text text-transparent">
               Goals & Objectives
             </h1>
             <p className="text-zinc-500 text-sm mt-1">
@@ -158,7 +158,7 @@ const Goals = ({ triggerGoalsRefresh }) => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="glass-panel border border-indigo-500/20 rounded-2xl p-6 overflow-hidden"
+              className="glass-panel-elevated panel-tint-neutral border border-indigo-500/20 rounded-2xl p-6 overflow-hidden shadow-lg"
             >
               <form onSubmit={handleAddGoal} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                 
@@ -181,7 +181,7 @@ const Goals = ({ triggerGoalsRefresh }) => {
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full py-2.5 px-3 rounded-lg text-xs glass-input bg-zinc-950 text-zinc-300 font-bold focus:outline-none"
+                    className="w-full py-2.5 px-3 rounded-lg text-xs glass-input bg-card text-zinc-800 dark:text-zinc-300 font-bold focus:outline-none"
                   >
                     <option value="Study">Study</option>
                     <option value="Project">Project</option>
@@ -243,7 +243,7 @@ const Goals = ({ triggerGoalsRefresh }) => {
                   <button
                     type="button"
                     onClick={() => setShowAddForm(false)}
-                    className="py-3 px-4 bg-zinc-900 border border-zinc-800 hover:bg-zinc-850 rounded-xl text-xs font-bold text-zinc-400 transition-all duration-150"
+                    className="py-3 px-4 bg-bg-secondary border border-border hover:bg-slate-200 dark:hover:bg-zinc-800/60 rounded-xl text-xs font-bold text-zinc-500 dark:text-zinc-400 transition-all duration-150"
                   >
                     Cancel
                   </button>
@@ -259,14 +259,14 @@ const Goals = ({ triggerGoalsRefresh }) => {
           
           {/* COLUMN 1: Active Objectives */}
           <div className="space-y-4">
-            <h2 className="text-lg font-bold text-white border-b border-zinc-800/80 pb-3 flex items-center gap-2">
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-white border-b border-border pb-3 flex items-center gap-2">
               <Target className="w-4 h-4 text-indigo-400" />
               <span>Active Objectives</span>
               <span className="ml-1 text-xs px-2 py-0.5 bg-indigo-500/10 border border-indigo-500/25 rounded-full text-indigo-400 font-extrabold">{pendingGoals.length}</span>
             </h2>
 
             {pendingGoals.length === 0 ? (
-              <div className="py-12 text-center text-xs text-zinc-500 border border-dashed border-zinc-800 rounded-2xl">
+              <div className="py-12 text-center text-xs text-zinc-500 border border-dashed border-border rounded-2xl">
                 No active targets defined. Fill in the form above to deploy one.
               </div>
             ) : (
@@ -283,12 +283,12 @@ const Goals = ({ triggerGoalsRefresh }) => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, x: -50 }}
-                        className="glass-panel border border-zinc-800/80 rounded-2xl p-5 hover:border-zinc-700/80 transition-all duration-200 space-y-4"
+                        className="glass-panel-elevated panel-tint-neutral p-5 hover:border-indigo-500/40 dark:hover:border-zinc-700/85 transition-all duration-200 space-y-4"
                       >
                         {/* Upper info row */}
                         <div className="flex justify-between items-start gap-4">
                           <div className="space-y-1">
-                            <h3 className="text-sm font-extrabold text-zinc-200 leading-snug">{goal.title}</h3>
+                            <h3 className="text-sm font-extrabold text-zinc-800 dark:text-zinc-200 leading-snug">{goal.title}</h3>
                             <div className="flex items-center gap-2 text-[10px] text-zinc-500 font-bold">
                               <Calendar className="w-3.5 h-3.5 text-zinc-500" />
                               <span>By {dateStr}</span>
@@ -301,7 +301,7 @@ const Goals = ({ triggerGoalsRefresh }) => {
                             </span>
                             <button
                               onClick={() => handleDelete(goal._id)}
-                              className="p-1.5 bg-zinc-900 border border-zinc-850 hover:bg-zinc-800 rounded-lg text-zinc-500 hover:text-accent-rose transition-colors"
+                              className="p-1.5 bg-bg-secondary border border-border hover:bg-slate-200 dark:hover:bg-zinc-800 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-accent-rose dark:hover:text-accent-rose transition-colors"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -310,13 +310,13 @@ const Goals = ({ triggerGoalsRefresh }) => {
 
                         {/* Lower Progress modifiers */}
                         <div className="space-y-3 pt-2">
-                          <div className="flex justify-between items-center text-xs font-semibold text-zinc-400">
+                          <div className="flex justify-between items-center text-xs font-semibold text-zinc-500 dark:text-zinc-400">
                             <span>Incremental Progress</span>
-                            <span className="text-zinc-200 font-extrabold">{goal.currentValue} / {goal.targetValue} {goal.unit} ({percent}%)</span>
+                            <span className="text-zinc-800 dark:text-zinc-200 font-extrabold">{goal.currentValue} / {goal.targetValue} {goal.unit} ({percent}%)</span>
                           </div>
 
                           {/* Bar indicator */}
-                          <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                          <div className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                             <div 
                               className="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full transition-all duration-300"
                               style={{ width: `${percent}%` }}
@@ -328,13 +328,13 @@ const Goals = ({ triggerGoalsRefresh }) => {
                             <button
                               onClick={() => handleIncrement(goal._id, goal.currentValue, goal.targetValue, -1)}
                               disabled={goal.currentValue <= 0}
-                              className="p-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-200 disabled:opacity-30 disabled:pointer-events-none active:scale-90 transition-transform"
+                              className="p-1.5 bg-bg-secondary border border-border hover:bg-slate-200 dark:hover:bg-zinc-800 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 disabled:opacity-30 disabled:pointer-events-none active:scale-90 transition-transform"
                             >
                               <Minus className="w-3.5 h-3.5" />
                             </button>
                             <button
                               onClick={() => handleIncrement(goal._id, goal.currentValue, goal.targetValue, 1)}
-                              className="p-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-200 active:scale-90 transition-transform"
+                              className="p-1.5 bg-bg-secondary border border-border hover:bg-slate-200 dark:hover:bg-zinc-800 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 active:scale-90 transition-transform"
                             >
                               <Plus className="w-3.5 h-3.5" />
                             </button>
@@ -350,15 +350,15 @@ const Goals = ({ triggerGoalsRefresh }) => {
 
           {/* COLUMN 2: Completed Milestones */}
           <div className="space-y-4">
-            <h2 className="text-lg font-bold text-white border-b border-zinc-800/80 pb-3 flex items-center gap-2">
+            <h2 className="text-lg font-bold text-zinc-900 dark:text-white border-b border-border pb-3 flex items-center gap-2">
               <Trophy className="w-4.5 h-4.5 text-accent-emerald animate-pulse" />
               <span>Completed Milestones</span>
               <span className="ml-1 text-xs px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/25 rounded-full text-emerald-400 font-extrabold">{completedGoals.length}</span>
             </h2>
 
             {completedGoals.length === 0 ? (
-              <div className="py-12 text-center text-xs text-zinc-500 border border-dashed border-zinc-800 rounded-2xl">
-                No goals marked completed yet. Complete your active parameters to trigger achievements!
+              <div className="py-12 text-center text-xs text-zinc-500 border border-dashed border-border rounded-2xl">
+                No goals marked completed yet. Complete your active targets to trigger achievements!
               </div>
             ) : (
               <div className="space-y-4">
@@ -385,7 +385,7 @@ const Goals = ({ triggerGoalsRefresh }) => {
                             </span>
                           </div>
 
-                          <h3 className="text-sm font-bold text-zinc-300 leading-snug line-through opacity-65">{goal.title}</h3>
+                          <h3 className="text-sm font-bold text-zinc-650 dark:text-zinc-300 leading-snug line-through opacity-65">{goal.title}</h3>
                           
                           <p className="text-[10px] text-zinc-500 font-semibold uppercase">
                             Logged: {goal.currentValue} / {goal.targetValue} {goal.unit}
@@ -395,7 +395,7 @@ const Goals = ({ triggerGoalsRefresh }) => {
                         <div className="flex flex-col items-end gap-3 shrink-0">
                           <button
                             onClick={() => handleDelete(goal._id)}
-                            className="p-1.5 bg-zinc-900 border border-zinc-850 hover:bg-zinc-800 rounded-lg text-zinc-500 hover:text-accent-rose transition-colors"
+                            className="p-1.5 bg-bg-secondary border border-border hover:bg-slate-200 dark:hover:bg-zinc-800 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-accent-rose dark:hover:text-accent-rose transition-colors"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>

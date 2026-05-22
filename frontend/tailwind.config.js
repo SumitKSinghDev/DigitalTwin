@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,18 +8,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#09090b', // deep rich black
-        card: '#18181b', // sleek charcoal
-        border: '#27272a', // standard zinc-800
+        background: 'var(--background)',      // Dynamic Main Background
+        'bg-secondary': 'var(--bg-secondary)',  // Dynamic Secondary Background
+        card: 'var(--card)',            // Dynamic Card Background
+        'card-hover': 'var(--card-hover)',     // Dynamic Hover Card Background
+        border: 'var(--border)',          // Dynamic Standard SaaS Border
+        'text-primary': 'var(--text-primary)',
+        'text-secondary': 'var(--text-secondary)',
+        'text-muted': 'var(--text-muted)',
         primary: {
-          DEFAULT: '#6366f1', // neon indigo
-          hover: '#4f46e5',
+          DEFAULT: '#3B82F6',       // Primary Accent Blue
+          hover: '#2563EB',
+          purple: '#8B5CF6',        // Secondary Accent Purple
         },
         accent: {
-          violet: '#8b5cf6', // neon violet
-          emerald: '#10b981', // emerald green
-          amber: '#f59e0b', // warning amber
-          rose: '#f43f5e', // alert rose
+          violet: '#8B5CF6',        // Purple accent
+          emerald: '#22C55E',       // Success Green
+          amber: '#F59E0B',         // Warning Orange
+          rose: '#EF4444',          // Danger Red
         }
       },
       scale: {

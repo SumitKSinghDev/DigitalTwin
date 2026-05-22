@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleLogin } from '@react-oauth/google';
+import Logo from '../components/Layout/Logo.jsx';
 import { 
-  BrainCircuit, 
   Mail, 
   Lock, 
   User, 
@@ -38,6 +38,21 @@ const Auth = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [statusIndex, setStatusIndex] = useState(0);
+  
+  const statusMessages = [
+    "Analyzing productivity telemetry...",
+    "Behavioral core synchronized successfully.",
+    "Twin profile calibrated.",
+    "Syncing behavioral intelligence modules..."
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStatusIndex((prev) => (prev + 1) % statusMessages.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, []);
 
   const { login, register, verifyOtp, resendOtp, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -197,7 +212,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen w-screen relative flex items-center justify-center bg-background px-4 py-8 overflow-hidden">
+    <div className="min-h-screen w-screen relative flex items-center justify-center bg-background px-4 py-8 overflow-hidden auth-page">
       {/* Decorative ambient glowing orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-violet-500/10 blur-[150px] pointer-events-none" />
@@ -209,10 +224,44 @@ const Auth = () => {
           {/* Drifting glow */}
           <div className="absolute top-1/4 left-1/4 w-[150px] h-[150px] rounded-full bg-indigo-600/10 blur-[40px]" />
           
+          {/* Floating AI Particles */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(6)].map((_, i) => {
+              const size = i % 2 === 0 ? 3 : 5;
+              const initialX = [15, 45, 75, 25, 85, 60][i];
+              const initialY = [25, 75, 40, 85, 15, 60][i];
+              return (
+                <motion.div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    left: `${initialX}%`,
+                    top: `${initialY}%`,
+                    width: size,
+                    height: size,
+                    borderRadius: '50%',
+                    backgroundColor: '#6366f1',
+                    opacity: 0.15,
+                  }}
+                  animate={{
+                    y: [0, -30, 0],
+                    x: [0, i % 2 === 0 ? 15 : -15, 0],
+                    opacity: [0.08, 0.25, 0.08],
+                  }}
+                  transition={{
+                    duration: 10 + i * 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              );
+            })}
+          </div>
+
           {/* Top Header */}
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-indigo-500/10 border border-indigo-500/30 rounded-xl text-primary">
-              <BrainCircuit className="w-6 h-6 text-indigo-400" />
+            <div className="flex-shrink-0">
+              <Logo className="w-9 h-9" />
             </div>
             <div>
               <span className="text-sm font-bold tracking-widest text-zinc-200">STUDENT TWIN</span>
@@ -221,55 +270,107 @@ const Auth = () => {
           </div>
 
           {/* Center visual: Interactive mock core */}
-          <div className="my-8">
+          <div className="relative my-8">
+            {/* Ambient glow breathing */}
+            <div className="absolute inset-0 -z-10 flex items-center justify-center">
+              <motion.div
+                animate={{ 
+                  scale: [1, 1.12, 1],
+                  opacity: [0.35, 0.55, 0.35]
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 6,
+                  ease: "easeInOut"
+                }}
+                className="w-[180px] h-[180px] rounded-full bg-indigo-500/15 blur-[45px] pointer-events-none"
+              />
+            </div>
+
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative p-6 glass-panel border border-zinc-800/80 rounded-2xl shadow-xl max-w-[320px] mx-auto bg-zinc-950/40 backdrop-blur-md"
+              className="relative p-6 glass-panel border border-zinc-850 bg-zinc-950/45 backdrop-blur-md rounded-2xl shadow-xl max-w-[320px] mx-auto"
             >
-              {/* Decorative mini grid */}
-              <div className="absolute -top-3 -right-3 p-2 bg-indigo-600 border border-indigo-400/30 rounded-lg text-white shadow-lg shadow-indigo-600/30 animate-pulse-slow">
+              {/* Decorative floating Zap icon */}
+              <motion.div 
+                animate={{ y: [0, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                className="absolute -top-3 -right-3 p-2 bg-indigo-600 border border-indigo-400/30 rounded-lg text-white shadow-lg shadow-indigo-600/30"
+              >
                 <Zap className="w-4 h-4" />
+              </motion.div>
+              
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping" />
+                <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Behavioral Sync Engaged</span>
               </div>
               
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-3 h-3 rounded-full bg-indigo-500 animate-ping" />
-                <span className="text-xs font-semibold text-zinc-400 uppercase tracking-widest">Core Synchronizer Active</span>
-              </div>
-              
-              <h3 className="text-sm font-bold text-zinc-100 mb-1">Telemetry Sync</h3>
-              <p className="text-xs text-zinc-500 mb-4">Verifying digital verification protocols</p>
+              <h3 className="text-sm font-bold text-zinc-100 mb-1">Intelligence Calibration</h3>
+              <p className="text-[11px] text-zinc-500 mb-4">Processing core student learning profiles</p>
               
               {/* Fake mini graphs */}
               <div className="flex items-end gap-1.5 h-16 mb-4">
-                {[45, 60, 50, 75, 90, 85, 98].map((h, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ height: 0 }}
-                    animate={{ height: `${h}%` }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                    className={`flex-1 rounded-t-sm ${i === 6 ? 'bg-indigo-500 shadow-md shadow-indigo-500/50' : 'bg-zinc-800'}`}
-                  />
-                ))}
+                {[45, 60, 50, 75, 90, 85, 98].map((h, i) => {
+                  const animatedHeights = [
+                    `${h}%`,
+                    `${Math.max(20, Math.min(100, h + (i % 2 === 0 ? 8 : -8)))}%`,
+                    `${Math.max(20, Math.min(100, h + (i % 2 === 0 ? -6 : 6)))}%`,
+                    `${h}%`
+                  ];
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ height: 0 }}
+                      animate={{ height: animatedHeights }}
+                      transition={{ 
+                        height: {
+                          repeat: Infinity, 
+                          duration: 5 + i * 0.4, 
+                          ease: "easeInOut" 
+                        },
+                        delay: i * 0.1 
+                      }}
+                      className={`flex-1 rounded-t-sm ${i === 6 ? 'bg-indigo-500 shadow-md shadow-indigo-500/50' : 'bg-zinc-800'}`}
+                    />
+                  );
+                })}
               </div>
 
-              <div className="flex items-center justify-between border-t border-zinc-800/80 pt-3 text-[11px]">
-                <span className="text-zinc-500">Security Core Status</span>
+              <div className="flex items-center justify-between border-t border-zinc-900 pt-3 text-[10px]">
+                <span className="text-zinc-500 font-medium">Neural Engine Status</span>
                 <span className="text-indigo-400 font-bold flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-emerald-400" /> AES-256 Validated
+                  <CheckCircle className="w-3 h-3 text-indigo-400" /> Active Sync
                 </span>
               </div>
             </motion.div>
+
+            {/* Micro status ticker under card */}
+            <div className="mt-4 flex items-center justify-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping" />
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={statusIndex}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-[10px] text-zinc-500 font-semibold tracking-wide"
+                >
+                  {statusMessages[statusIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
           </div>
 
           {/* Bottom text */}
-          <div className="space-y-2">
-            <h2 className="text-xl font-extrabold text-zinc-100 leading-tight">
-              Unlock Your Intellectual Blueprint
+          <div className="space-y-3">
+            <h2 className="text-xl font-extrabold tracking-tight text-zinc-100 leading-tight">
+              Analyze Your Behavioral Blueprint
             </h2>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              Log daily performance, analyze consistency profiles, predict mental fatigue spikes, and receive real-time behavioral diagnostics customized to your specific study styles.
+              Track focus patterns, monitor burnout signals, and build an AI-powered behavioral profile tailored to your learning habits.
             </p>
           </div>
         </div>
@@ -391,10 +492,10 @@ const Auth = () => {
               >
                 <div className="mb-8">
                   <h2 className="text-2xl font-extrabold tracking-tight text-white mb-2">
-                    {isLogin ? 'Welcome Back' : 'Create Student Twin'}
+                    {isLogin ? 'Welcome Back' : 'Get Started'}
                   </h2>
                   <p className="text-xs text-zinc-500">
-                    {isLogin ? 'Enter your credentials to access your twin state.' : 'Register to activate your virtual twin core.'}
+                    {isLogin ? 'Access your behavioral analytics dashboard.' : 'Initialize your personalized AI learning twin.'}
                   </p>
                 </div>
 
@@ -533,13 +634,13 @@ const Auth = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3.5 mt-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-600/20 active:scale-95 transition-all duration-150 flex items-center justify-center gap-2"
+                    className="w-full py-3.5 mt-2 bg-indigo-600 hover:bg-indigo-650 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 active:scale-98 transition-all duration-150 flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <span className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                     ) : (
                       <>
-                        <span>{isLogin ? 'Connect Twin Server' : 'Initialize Twin Core'}</span>
+                        <span>{isLogin ? 'Sync Twin Profile' : 'Initialize Twin'}</span>
                         <Zap className="w-4 h-4" />
                       </>
                     )}
@@ -549,17 +650,42 @@ const Auth = () => {
                 {/* Elegant separator */}
                 <div className="relative flex items-center justify-center my-6">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-zinc-800"></div>
+                    <div className="w-full border-t border-zinc-900"></div>
                   </div>
-                  <span className="relative px-3 bg-zinc-950 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
-                    Or Synchronize With
+                  <span className="relative px-3 bg-zinc-950 text-[9px] font-extrabold text-zinc-500 uppercase tracking-widest">
+                    Or Continue With
                   </span>
                 </div>
 
-                {/* Google Sign-In Container Card */}
-                <div className="flex justify-center p-0.5 rounded-xl border border-zinc-800 bg-zinc-900/40 hover:border-zinc-700 transition-all shadow-md overflow-hidden relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                  <div className="w-full flex justify-center py-1">
+                {/* Customized Premium Dark Google Auth Button with hidden GoogleLogin capture layer */}
+                <div className="relative w-full rounded-xl overflow-hidden border border-zinc-800 bg-[#0A0C10] hover:bg-[#0F1116] hover:border-zinc-700 transition-all duration-200 shadow-md group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-transparent to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  
+                  {/* Visual Premium Dark Button */}
+                  <div className="w-full py-3.5 flex items-center justify-center gap-2.5 text-zinc-300 font-bold text-sm select-none pointer-events-none">
+                    <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fill="#4285F4"
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                      />
+                      <path
+                        fill="#34A853"
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                      />
+                      <path
+                        fill="#FBBC05"
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22c-.1-.23-.19-.48-.28-.63z"
+                      />
+                      <path
+                        fill="#EA4335"
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                      />
+                    </svg>
+                    <span>Sync with Google</span>
+                  </div>
+
+                  {/* Fully transparent Google Login container that captures clicks */}
+                  <div className="absolute inset-0 opacity-0 z-20 cursor-pointer overflow-hidden scale-110 flex items-center justify-center [&_*]:w-full [&_*]:h-full">
                     <GoogleLogin
                       onSuccess={handleGoogleSuccess}
                       onError={() => {
@@ -568,7 +694,7 @@ const Auth = () => {
                       theme="dark"
                       shape="circle"
                       size="large"
-                      width="330px"
+                      width="380px"
                     />
                   </div>
                 </div>

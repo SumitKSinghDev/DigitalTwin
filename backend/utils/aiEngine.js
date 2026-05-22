@@ -107,7 +107,7 @@ export const generateGrowthPrediction = (logs) => {
       trend: 'stable',
       projectedProductivity: 65,
       rate: 0,
-      forecast: 'Provide at least 3 daily logs to unlock growth predictive modeling.'
+      forecast: 'Log your activity for 3 days to generate personalized growth predictions.'
     };
   }
   

@@ -48,6 +48,23 @@ const userSchema = new mongoose.Schema({
     colorTheme: { type: String, default: 'indigo' },
     styleType: { type: String, default: 'glowing-orb' },
   },
+  isOnboarded: {
+    type: Boolean,
+    default: false,
+  },
+  onboardingData: {
+    studyGoals: { type: String, default: '' },
+    preferredStudyTiming: { type: String, default: '' },
+    sleepTargets: { type: Number, default: 8 },
+    academicInterests: { type: String, default: '' },
+    burnoutSensitivity: { type: String, default: 'Medium' },
+    productivityStyle: { type: String, default: '' },
+  },
+  twinPersonality: {
+    archetype: { type: String, default: '' },
+    strengths: { type: [String], default: [] },
+    weaknesses: { type: [String], default: [] },
+  },
 }, {
   timestamps: true,
 });

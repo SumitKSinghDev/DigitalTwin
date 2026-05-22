@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext, AuthProvider } from './context/AuthContext.jsx';
+import { ThemeProvider } from './context/ThemeContext.jsx';
 import api from './utils/api.js';
 
 // Layout Components
@@ -14,10 +15,12 @@ import Tracker from './pages/Tracker.jsx';
 import Analytics from './pages/Analytics.jsx';
 import Goals from './pages/Goals.jsx';
 import Insights from './pages/Insights.jsx';
+import TalkToTwin from './pages/TalkToTwin.jsx';
+import Onboarding from './pages/Onboarding.jsx';
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useContext(AuthContext);
+  const { isAuthenticated, user, loading } = useContext(AuthContext);
 
   if (loading) {
     return (
@@ -27,7 +30,38 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  return isAuthenticated ? children : <Navigate to="/auth" replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  if (user && !user.isOnboarded) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  return children;
+};
+
+// Onboarding Route wrapper
+const OnboardingRoute = ({ children }) => {
+  const { isAuthenticated, user, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return (
+      <div className="h-screen w-screen bg-background flex items-center justify-center">
+        <span className="w-8 h-8 rounded-full border-2 border-indigo-500/20 border-t-indigo-500 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  if (user && user.isOnboarded) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 };
 
 const AppContent = () => {
@@ -95,7 +129,7 @@ const AppContent = () => {
   const mainClasses = `flex-1 min-h-screen transition-all duration-300 ${isCollapsed ? 'pl-28' : 'pl-72'}`;
 
   return (
-    <div className="relative min-h-screen text-zinc-100 bg-background selection:bg-indigo-500/30 selection:text-white">
+    <div className="relative min-h-screen text-zinc-100 bg-background">
       {/* Visual background canvas */}
       <GlowBackground />
 
@@ -178,6 +212,31 @@ const AppContent = () => {
           } 
         />
 
+        {/* Talk to Twin Conversational AI Panel */}
+        <Route 
+          path="/talk" 
+          element={
+            <ProtectedRoute>
+              <div className="flex">
+                <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
+                <main className={mainClasses}>
+                  <TalkToTwin />
+                </main>
+              </div>
+            </ProtectedRoute>
+          } 
+        />
+
+        {/* Onboarding Wizard Setup */}
+        <Route 
+          path="/onboarding" 
+          element={
+            <OnboardingRoute>
+              <Onboarding />
+            </OnboardingRoute>
+          } 
+        />
+
         {/* Fallback redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
@@ -188,9 +247,11 @@ const AppContent = () => {
 const App = () => {
   return (
     <Router>
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   );
 };

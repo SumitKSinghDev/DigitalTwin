@@ -1,4 +1,7 @@
 import DailyLog from '../models/DailyLog.js';
+import TwinState from '../models/TwinState.js';
+import Analytics from '../models/Analytics.js';
+import * as aiEngine from '../utils/aiEngine.js';
 
 // @desc    Create or update a daily log
 // @route   POST /api/logs
@@ -28,6 +31,57 @@ export const saveDailyLog = async (req, res) => {
       { userId: req.user._id, date },
       logData,
       { new: true, upsert: true, runValidators: true }
+    );
+
+    // TELEMETRY PIPELINE INTEGRATION
+    // Fetch all logs for the user to perform rolling calculations
+    const logs = await DailyLog.find({ userId: req.user._id }).sort({ date: 1 });
+    
+    // Compute current state indices
+    const productivityScore = aiEngine.calculateProductivityScore(log);
+    const burnout = aiEngine.calculateBurnoutRisk(logs);
+    const consistencyIndex = aiEngine.calculateConsistencyIndex(logs);
+
+    // Map Burnout Risk Level to Twin Status String and Color Theme
+    let twinStatus = 'Balanced';
+    let colorTheme = 'indigo';
+    
+    if (burnout.level === 'Critical' || burnout.level === 'High') {
+      twinStatus = burnout.score > 75 ? 'Burned Out' : 'Fatigued';
+      colorTheme = burnout.score > 75 ? 'orange' : 'red';
+    } else if (burnout.level === 'Moderate') {
+      twinStatus = 'Strained';
+      colorTheme = 'orange';
+    } else if (productivityScore > 80) {
+      twinStatus = 'Focused';
+      colorTheme = 'purple';
+    } else if (productivityScore > 60) {
+      twinStatus = 'Energetic';
+      colorTheme = 'blue';
+    }
+
+    // 1. Sync TwinState
+    await TwinState.findOneAndUpdate(
+      { userId: req.user._id },
+      {
+        twinStatus,
+        colorTheme,
+        glowIntensity: Math.min(100, Math.max(30, productivityScore)),
+      },
+      { upsert: true, new: true }
+    );
+
+    // 2. Sync Analytics Snapshot
+    await Analytics.findOneAndUpdate(
+      { userId: req.user._id, date },
+      {
+        productivityScore,
+        burnoutProbability: burnout.score,
+        focusConsistency: consistencyIndex,
+        sleepHours: log.sleepHours,
+        stressLevel: log.stressLevel,
+      },
+      { upsert: true, new: true }
     );
 
     res.status(200).json(log);

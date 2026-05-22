@@ -23,6 +23,66 @@ const writeDB = (data) => {
 // Unique ID Generator
 const generateId = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
+// Helper to map user properties and attach save method
+const mapUserResult = (user) => {
+  if (!user) return null;
+  return {
+    ...user,
+    name: user.name || user.username || '',
+    username: user.username || user.name || '',
+    isVerified: user.isVerified !== undefined ? user.isVerified : false,
+    otpCode: user.otpCode || null,
+    otpExpires: user.otpExpires || null,
+    googleId: user.googleId || null,
+    isGoogleUser: user.isGoogleUser || false,
+    isOnboarded: user.isOnboarded !== undefined ? user.isOnboarded : false,
+    onboardingData: user.onboardingData || {
+      studyGoals: '',
+      preferredStudyTiming: '',
+      sleepTargets: 8,
+      academicInterests: '',
+      burnoutSensitivity: 'Medium',
+      productivityStyle: '',
+    },
+    twinPersonality: user.twinPersonality || {
+      archetype: '',
+      strengths: [],
+      weaknesses: [],
+    },
+    matchPassword: async function (enteredPassword) {
+      if (!this.password) return false;
+      return await bcrypt.compare(enteredPassword, this.password);
+    },
+    save: async function () {
+      const activeDb = readDB();
+      activeDb.users = activeDb.users.map(u => {
+        if (u._id === this._id) {
+          return {
+            ...u,
+            name: this.name,
+            username: this.username,
+            email: this.email,
+            password: this.password,
+            isVerified: this.isVerified,
+            otpCode: this.otpCode,
+            otpExpires: this.otpExpires,
+            googleId: this.googleId,
+            isGoogleUser: this.isGoogleUser,
+            avatarStyle: this.avatarStyle,
+            isOnboarded: this.isOnboarded,
+            onboardingData: this.onboardingData,
+            twinPersonality: this.twinPersonality,
+            updatedAt: new Date().toISOString()
+          };
+        }
+        return u;
+      });
+      writeDB(activeDb);
+      return this;
+    }
+  };
+};
+
 // User Mock Methods
 export const UserMock = {
   findOne: (query) => {
@@ -48,44 +108,7 @@ export const UserMock = {
       return false;
     });
 
-    const result = user ? {
-      ...user,
-      name: user.name || user.username || '',
-      username: user.username || user.name || '',
-      isVerified: user.isVerified !== undefined ? user.isVerified : false,
-      otpCode: user.otpCode || null,
-      otpExpires: user.otpExpires || null,
-      googleId: user.googleId || null,
-      isGoogleUser: user.isGoogleUser || false,
-      matchPassword: async function (enteredPassword) {
-        if (!this.password) return false;
-        return await bcrypt.compare(enteredPassword, this.password);
-      },
-      save: async function () {
-        const activeDb = readDB();
-        activeDb.users = activeDb.users.map(u => {
-          if (u._id === this._id) {
-            return {
-              ...u,
-              name: this.name,
-              username: this.username,
-              email: this.email,
-              password: this.password,
-              isVerified: this.isVerified,
-              otpCode: this.otpCode,
-              otpExpires: this.otpExpires,
-              googleId: this.googleId,
-              isGoogleUser: this.isGoogleUser,
-              avatarStyle: this.avatarStyle,
-              updatedAt: new Date().toISOString()
-            };
-          }
-          return u;
-        });
-        writeDB(activeDb);
-        return this;
-      }
-    } : null;
+    const result = mapUserResult(user);
 
     const queryObj = {
       select: function () { return this; },
@@ -121,6 +144,20 @@ export const UserMock = {
       googleId: data.googleId || null,
       isGoogleUser: data.isGoogleUser || false,
       avatarStyle: data.avatarStyle || { colorTheme: 'indigo', styleType: 'glowing-orb' },
+      isOnboarded: data.isOnboarded !== undefined ? data.isOnboarded : false,
+      onboardingData: data.onboardingData || {
+        studyGoals: '',
+        preferredStudyTiming: '',
+        sleepTargets: 8,
+        academicInterests: '',
+        burnoutSensitivity: 'Medium',
+        productivityStyle: '',
+      },
+      twinPersonality: data.twinPersonality || {
+        archetype: '',
+        strengths: [],
+        weaknesses: [],
+      },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -128,39 +165,7 @@ export const UserMock = {
     db.users.push(newUser);
     writeDB(db);
 
-    const result = {
-      ...newUser,
-      matchPassword: async function (enteredPassword) {
-        if (!this.password) return false;
-        return await bcrypt.compare(enteredPassword, this.password);
-      },
-      save: async function () {
-        const activeDb = readDB();
-        activeDb.users = activeDb.users.map(u => {
-          if (u._id === this._id) {
-            return {
-              ...u,
-              name: this.name,
-              username: this.username,
-              email: this.email,
-              password: this.password,
-              isVerified: this.isVerified,
-              otpCode: this.otpCode,
-              otpExpires: this.otpExpires,
-              googleId: this.googleId,
-              isGoogleUser: this.isGoogleUser,
-              avatarStyle: this.avatarStyle,
-              updatedAt: new Date().toISOString()
-            };
-          }
-          return u;
-        });
-        writeDB(activeDb);
-        return this;
-      }
-    };
-
-    return result;
+    return mapUserResult(newUser);
   },
 
   findById: (id) => {
@@ -168,44 +173,7 @@ export const UserMock = {
     const userStr = id ? id.toString() : '';
     const user = db.users.find(u => u._id === userStr);
     
-    const result = user ? {
-      ...user,
-      name: user.name || user.username || '',
-      username: user.username || user.name || '',
-      isVerified: user.isVerified !== undefined ? user.isVerified : false,
-      otpCode: user.otpCode || null,
-      otpExpires: user.otpExpires || null,
-      googleId: user.googleId || null,
-      isGoogleUser: user.isGoogleUser || false,
-      matchPassword: async function (enteredPassword) {
-        if (!this.password) return false;
-        return await bcrypt.compare(enteredPassword, this.password);
-      },
-      save: async function () {
-        const activeDb = readDB();
-        activeDb.users = activeDb.users.map(u => {
-          if (u._id === this._id) {
-            return {
-              ...u,
-              name: this.name,
-              username: this.username,
-              email: this.email,
-              password: this.password,
-              isVerified: this.isVerified,
-              otpCode: this.otpCode,
-              otpExpires: this.otpExpires,
-              googleId: this.googleId,
-              isGoogleUser: this.isGoogleUser,
-              avatarStyle: this.avatarStyle,
-              updatedAt: new Date().toISOString()
-            };
-          }
-          return u;
-        });
-        writeDB(activeDb);
-        return this;
-      }
-    } : null;
+    const result = mapUserResult(user);
 
     const queryObj = {
       select: function () { return this; },

@@ -26,3 +26,17 @@ Thumbs.db
 
 # Local fallback database
 **/db.json
+
+# Python caches, virtualenvs & model artifacts
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+venv/
+.venv/
+env/
+ml-service/models/burnout_model.joblib
+ml-service/models/productivity_model.joblib
+ml-service/models/goal_model.joblib
+ml-service/models/scaler.joblib

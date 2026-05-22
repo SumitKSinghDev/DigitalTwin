@@ -7,7 +7,8 @@ import {
   googleLogin,
   getUserProfile,
   updateAvatarStyle,
-  resetDatabase
+  resetDatabase,
+  submitOnboarding
 } from '../controllers/authController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -21,5 +22,6 @@ router.post('/google', googleLogin);
 router.post('/reset-database', resetDatabase);
 router.get('/profile', protect, getUserProfile);
 router.put('/avatar', protect, updateAvatarStyle);
+router.put('/onboarding', protect, submitOnboarding);
 
 export default router;

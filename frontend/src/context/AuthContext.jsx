@@ -42,6 +42,9 @@ export const AuthProvider = ({ children }) => {
         username: res.data.username || res.data.name,
         email: res.data.email,
         avatarStyle: res.data.avatarStyle,
+        isOnboarded: res.data.isOnboarded,
+        onboardingData: res.data.onboardingData,
+        twinPersonality: res.data.twinPersonality,
       });
       return { success: true };
     } catch (error) {
@@ -68,6 +71,9 @@ export const AuthProvider = ({ children }) => {
         username: res.data.username || res.data.name,
         email: res.data.email,
         avatarStyle: res.data.avatarStyle,
+        isOnboarded: res.data.isOnboarded,
+        onboardingData: res.data.onboardingData,
+        twinPersonality: res.data.twinPersonality,
       });
       return { success: true };
     } catch (error) {
@@ -89,6 +95,9 @@ export const AuthProvider = ({ children }) => {
         username: res.data.username || res.data.name,
         email: res.data.email,
         avatarStyle: res.data.avatarStyle,
+        isOnboarded: res.data.isOnboarded,
+        onboardingData: res.data.onboardingData,
+        twinPersonality: res.data.twinPersonality,
       });
       return { success: true, message: res.data.message };
     } catch (error) {
@@ -123,6 +132,9 @@ export const AuthProvider = ({ children }) => {
         username: res.data.username || res.data.name,
         email: res.data.email,
         avatarStyle: res.data.avatarStyle,
+        isOnboarded: res.data.isOnboarded,
+        onboardingData: res.data.onboardingData,
+        twinPersonality: res.data.twinPersonality,
       });
       return { success: true };
     } catch (error) {
@@ -156,6 +168,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Onboarding completion context update helper
+  const completeOnboarding = (userData) => {
+    setUser({
+      _id: userData._id,
+      name: userData.name || userData.username,
+      username: userData.username || userData.name,
+      email: userData.email,
+      avatarStyle: userData.avatarStyle,
+      isOnboarded: userData.isOnboarded,
+      onboardingData: userData.onboardingData,
+      twinPersonality: userData.twinPersonality,
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -168,6 +194,7 @@ export const AuthProvider = ({ children }) => {
         loginWithGoogle,
         logout,
         updateAvatar,
+        completeOnboarding,
         isAuthenticated: !!user,
       }}
     >
