@@ -72,7 +72,8 @@ const Analytics = () => {
   // Map database logs into Recharts friendly structures
   const chartData = filteredLogs.map((log) => {
     // Format date string for shorter chart labels (e.g. "May 21")
-    const dateObj = new Date(log.date + 'T00:00:00');
+    const logDateOnly = log.date && log.date.includes('T') ? log.date.split('T')[0] : log.date;
+    const dateObj = new Date((logDateOnly || '') + 'T00:00:00');
     const formattedDate = dateObj.toLocaleDateString('en-US', { 
       month: 'short', 
       day: 'numeric' 

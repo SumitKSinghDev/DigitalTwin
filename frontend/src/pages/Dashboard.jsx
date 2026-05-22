@@ -246,7 +246,11 @@ const FocusHeatmap = ({ logs, timeframe }) => {
   };
 
   const getGridOpacity = (dateStr, hourIndex, isLogged) => {
-    const log = logs.find(l => l.date === dateStr);
+    const log = logs.find(l => {
+      if (!l.date) return false;
+      const logDateOnly = l.date.includes('T') ? l.date.split('T')[0] : l.date;
+      return logDateOnly === dateStr;
+    });
     const focusLevel = log ? log.focusLevel : 5.0; // 5.0 baseline focus level
     const focusFactor = focusLevel / 10;
     const hourFactor = getHourFocusFactor(hourIndex);
@@ -275,7 +279,11 @@ const FocusHeatmap = ({ logs, timeframe }) => {
         className="max-h-[220px] overflow-y-auto pr-1.5 space-y-1 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent"
       >
         {heatmapDays.map((day) => {
-          const log = logs.find(l => l.date === day.dateStr);
+          const log = logs.find(l => {
+            if (!l.date) return false;
+            const logDateOnly = l.date.includes('T') ? l.date.split('T')[0] : l.date;
+            return logDateOnly === day.dateStr;
+          });
           const isLogged = !!log;
 
           return (
@@ -305,6 +313,11 @@ const FocusHeatmap = ({ logs, timeframe }) => {
                           isLogged: isLogged,
                           activeFocus: isLogged ? Math.round(opacity * 100) : null,
                           expectedFocus: Math.round(getHourFocusFactor(hIdx) * 100),
+                          studyHours: log ? log.studyHours : null,
+                          sleepHours: log ? log.sleepHours : null,
+                          stressLevel: log ? log.stressLevel : null,
+                          tasksCompleted: log ? log.tasksCompleted : null,
+                          tasksTotal: log ? log.tasksTotal : null,
                           x: rect.left - containerRect.left + rect.width / 2,
                           y: rect.top - containerRect.top - 8
                         });
@@ -332,7 +345,7 @@ const FocusHeatmap = ({ logs, timeframe }) => {
             top: `${hoveredCell.y}px`,
             transform: 'translate(-50%, -100%)',
             whiteSpace: 'nowrap',
-            minWidth: '150px'
+            minWidth: '170px'
           }}
         >
           <div className={`flex items-center justify-between gap-3 border-b pb-1.5 ${
@@ -366,6 +379,52 @@ const FocusHeatmap = ({ logs, timeframe }) => {
               <span className={`font-extrabold text-[10px] ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>{hoveredCell.expectedFocus}%</span>
             </div>
           </div>
+
+          {/* Premium Telemetry Hover Stats (only shown when actual log exists) */}
+          {hoveredCell.isLogged && (
+            <div className={`border-t my-1.5 pt-1.5 space-y-1 ${
+              theme === 'light' ? 'border-slate-200/60' : 'border-[#2A3142]/60'
+            }`}>
+              <div className="flex justify-between items-center gap-4">
+                <span className="text-zinc-400 font-bold text-[9px] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                  Study Sprints:
+                </span>
+                <span className={`font-extrabold text-[10px] ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                  {hoveredCell.studyHours !== null ? `${hoveredCell.studyHours} hrs` : '0 hrs'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center gap-4">
+                <span className="text-zinc-400 font-bold text-[9px] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  Sleep Duration:
+                </span>
+                <span className={`font-extrabold text-[10px] ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                  {hoveredCell.sleepHours !== null ? `${hoveredCell.sleepHours} hrs` : '0 hrs'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center gap-4">
+                <span className="text-zinc-400 font-bold text-[9px] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  Stress Strain:
+                </span>
+                <span className={`font-extrabold text-[10px] ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                  {hoveredCell.stressLevel !== null ? `${hoveredCell.stressLevel}/10` : '0/10'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center gap-4">
+                <span className="text-zinc-400 font-bold text-[9px] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                  Tasks Complete:
+                </span>
+                <span className={`font-extrabold text-[10px] ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
+                  {hoveredCell.tasksCompleted !== null && hoveredCell.tasksTotal !== null
+                    ? `${hoveredCell.tasksCompleted}/${hoveredCell.tasksTotal}`
+                    : '0/0'}
+                </span>
+              </div>
+            </div>
+          )}
           
           <div className={`absolute left-1/2 -bottom-[4px] -translate-x-1/2 w-2 h-2 rotate-45 ${
             theme === 'light' ? 'bg-white border-r border-b border-slate-200/80' : 'bg-zinc-950 border-r border-b border-[#2A3142]'
@@ -577,7 +636,11 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
   const timeframeDates = getDatesForTimeframe();
   
   const barChartData = timeframeDates.map(dateStr => {
-    const log = historicalLogs.find(l => l.date === dateStr);
+    const log = historicalLogs.find(l => {
+      if (!l.date) return false;
+      const logDateOnly = l.date.includes('T') ? l.date.split('T')[0] : l.date;
+      return logDateOnly === dateStr;
+    });
     const d = new Date(dateStr + 'T00:00:00');
     
     let label = '';
@@ -629,7 +692,7 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
   const consistencyDetails = getConsistencyDetails(twinData.consistencyIndex);
 
   return (
-    <div className="pr-8 pt-8 pb-56 min-h-screen bg-background overflow-x-hidden">
+    <div className="pr-8 pt-8 pb-20 min-h-screen bg-background overflow-x-hidden">
       <motion.div 
         variants={containerVariants}
         initial="hidden"
