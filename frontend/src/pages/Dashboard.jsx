@@ -269,7 +269,7 @@ const FocusHeatmap = ({ logs, timeframe }) => {
   const heatmapDays = getHeatmapDays();
 
   return (
-    <div className="space-y-4 relative">
+    <div ref={containerRef} className="space-y-4 relative">
       <div 
         onScroll={() => setHoveredCell(null)}
         className="max-h-[220px] overflow-y-auto pr-1.5 space-y-1 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent"
