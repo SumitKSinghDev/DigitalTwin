@@ -4,7 +4,7 @@ import { useTheme } from '../context/ThemeContext.jsx';
 import api from '../utils/api.js';
 import TwinAvatar from '../components/Dashboard/TwinAvatar.jsx';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ResponsiveContainer, 
   BarChart, 
@@ -32,7 +32,8 @@ import {
   Calendar,
   Code,
   CheckCircle2,
-  Lock
+  Lock,
+  X
 } from 'lucide-react';
 import { getDynamicInsights } from '../utils/insightHelper.jsx';
 
@@ -461,6 +462,7 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
   const [historicalLogs, setHistoricalLogs] = useState([]);
   const [timeframe, setTimeframe] = useState('7');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showSuggestion, setShowSuggestion] = useState(true);
 
   const timeframeLabels = {
     '7': 'This Week',
@@ -627,7 +629,7 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
   const consistencyDetails = getConsistencyDetails(twinData.consistencyIndex);
 
   return (
-    <div className="pr-8 pt-8 pb-32 min-h-screen bg-background overflow-x-hidden">
+    <div className="pr-8 pt-8 pb-56 min-h-screen bg-background overflow-x-hidden">
       <motion.div 
         variants={containerVariants}
         initial="hidden"
@@ -1370,27 +1372,39 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
 
       {/* Floating "Talk to Twin" CTA with contextual prompt popover */}
       <div className="fixed bottom-6 right-6 z-[99] flex flex-col items-end gap-3 pointer-events-none">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ delay: 3.5, type: "spring", stiffness: 100 }}
-          className={`p-3.5 rounded-2xl shadow-2xl max-w-xs pointer-events-auto flex items-start gap-2.5 relative overflow-hidden border ${
-            theme === 'light' ? 'bg-card border-border shadow-indigo-500/5' : 'bg-[#1A1D26] border-[#2A3142] shadow-black/75'
-          }`}
-        >
-          <div className="absolute -left-6 -bottom-6 w-12 h-12 bg-blue-500/5 rounded-full blur-xl animate-pulse" />
-          <div className="p-1.5 bg-blue-500/10 border border-blue-500/20 rounded-xl text-primary animate-bounce mt-0.5">
-            <Sparkles className="w-3.5 h-3.5" />
-          </div>
-          <div className="space-y-0.5">
-            <p className="text-[9px] font-extrabold text-blue-400 uppercase tracking-wider">Twin Suggestion</p>
-            <p className="text-[10px] text-zinc-300 font-semibold leading-relaxed">
-              {twinData.burnout.score > 50 
-                ? "Ask your twin how to reduce burnout risk."
-                : "Talk to Twin about optimizing your late study sprints."}
-            </p>
-          </div>
-        </motion.div>
+        <AnimatePresence>
+          {showSuggestion && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0, transition: { delay: 3.5, type: "spring", stiffness: 100 } }}
+              exit={{ opacity: 0, scale: 0.9, y: 10, transition: { delay: 0, duration: 0.2 } }}
+              className={`p-3.5 pr-8 rounded-2xl shadow-2xl max-w-xs pointer-events-auto flex items-start gap-2.5 relative overflow-hidden border ${
+                theme === 'light' ? 'bg-card border-border shadow-indigo-500/5' : 'bg-[#1A1D26] border-[#2A3142] shadow-black/75'
+              }`}
+            >
+              <div className="absolute -left-6 -bottom-6 w-12 h-12 bg-blue-500/5 rounded-full blur-xl animate-pulse" />
+              <div className="p-1.5 bg-blue-500/10 border border-blue-500/20 rounded-xl text-primary animate-bounce mt-0.5">
+                <Sparkles className="w-3.5 h-3.5" />
+              </div>
+              <div className="space-y-0.5">
+                <p className="text-[9px] font-extrabold text-blue-400 uppercase tracking-wider">Twin Suggestion</p>
+                <p className="text-[10px] text-zinc-300 font-semibold leading-relaxed">
+                  {twinData.burnout.score > 50 
+                    ? "Ask your twin how to reduce burnout risk."
+                    : "Talk to Twin about optimizing your late study sprints."}
+                </p>
+              </div>
+              
+              <button
+                onClick={() => setShowSuggestion(false)}
+                className="absolute top-2.5 right-2.5 text-zinc-400 hover:text-zinc-200 transition-colors p-0.5 rounded-full hover:bg-white/10 dark:hover:bg-zinc-800"
+                aria-label="Dismiss suggestion"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
