@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GoogleLogin } from '@react-oauth/google';
 import Logo from '../components/Layout/Logo.jsx';
 import { 
   Mail, 
@@ -210,13 +209,13 @@ const Auth = () => {
     setLoading(false);
   };
 
-  // Google Sign-In Success Handler
-  const handleGoogleSuccess = async (credentialResponse) => {
+  // Native Google Accounts OAuth callback response handler
+  const handleGoogleResponse = async (response) => {
     setErrorMsg('');
     setSuccessMsg('');
     setLoading(true);
 
-    const res = await loginWithGoogle(credentialResponse.credential);
+    const res = await loginWithGoogle(response.credential);
     if (res.success) {
       navigate('/');
     } else {
@@ -224,6 +223,52 @@ const Auth = () => {
     }
     setLoading(false);
   };
+
+  const initGoogleSDK = () => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: handleGoogleResponse,
+      });
+
+      const signInDiv = document.getElementById('googleSignInDiv');
+      if (signInDiv) {
+        window.google.accounts.id.renderButton(
+          signInDiv,
+          {
+            theme: 'filled_black',
+            size: 'large',
+            text: 'continue_with',
+            shape: 'rectangular',
+            width: 350
+          }
+        );
+      }
+    }
+  };
+
+  useEffect(() => {
+    const gsiScriptId = 'google-gsi-client';
+    const initOrLoad = () => {
+      if (window.google) {
+        initGoogleSDK();
+      }
+    };
+
+    if (!document.getElementById(gsiScriptId)) {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.id = gsiScriptId;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        setTimeout(initOrLoad, 100);
+      };
+      document.body.appendChild(script);
+    } else {
+      initOrLoad();
+    }
+  }, [otpRequired, isLogin]);
 
   return (
     <div className="min-h-screen w-screen relative flex items-center justify-center bg-background px-4 py-8 overflow-hidden auth-page">
@@ -671,46 +716,9 @@ const Auth = () => {
                   </span>
                 </div>
 
-                {/* Customized Premium Dark Google Auth Button with hidden GoogleLogin capture layer */}
-                <div className="relative w-full rounded-xl overflow-hidden border border-zinc-800 bg-[#0A0C10] hover:bg-[#0F1116] hover:border-zinc-700 transition-all duration-200 shadow-md group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-transparent to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                  
-                  {/* Visual Premium Dark Button */}
-                  <div className="w-full py-3.5 flex items-center justify-center gap-2.5 text-zinc-300 font-bold text-sm select-none pointer-events-none">
-                    <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        fill="#4285F4"
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                      />
-                      <path
-                        fill="#34A853"
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                      />
-                      <path
-                        fill="#FBBC05"
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22c-.1-.23-.19-.48-.28-.63z"
-                      />
-                      <path
-                        fill="#EA4335"
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                      />
-                    </svg>
-                    <span>Sync with Google</span>
-                  </div>
-
-                  {/* Fully transparent Google Login container that captures clicks */}
-                  <div className="absolute inset-0 opacity-0 z-20 cursor-pointer overflow-hidden scale-110 flex items-center justify-center [&_*]:w-full [&_*]:h-full">
-                    <GoogleLogin
-                      onSuccess={handleGoogleSuccess}
-                      onError={() => {
-                        setErrorMsg('Google OAuth authentication failed. Please try again.');
-                      }}
-                      theme="dark"
-                      shape="circle"
-                      size="large"
-                      width="380px"
-                    />
-                  </div>
+                {/* Native Google OAuth Integration to avoid session overlay glitches */}
+                <div className="flex justify-center w-full min-h-[46px] rounded-xl overflow-hidden bg-[#0A0C10] border border-zinc-800 py-1 hover:border-zinc-700 hover:bg-[#0F1116] transition-all duration-200">
+                  <div id="googleSignInDiv" className="w-full flex justify-center scale-95 transition-all"></div>
                 </div>
 
                 {/* Switch View Toggle Trigger */}

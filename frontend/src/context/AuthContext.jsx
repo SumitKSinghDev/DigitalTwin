@@ -124,6 +124,18 @@ export const AuthProvider = ({ children }) => {
   // Google OAuth Login handler
   const loginWithGoogle = async (credential) => {
     try {
+      localStorage.removeItem('student_twin_token');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+
+      if (window.google && window.google.accounts && window.google.accounts.id) {
+        try {
+          window.google.accounts.id.cancel();
+        } catch (err) {
+          console.warn('Google cancel warning:', err);
+        }
+      }
+
       const res = await api.post('/auth/google', { credential });
       localStorage.setItem('student_twin_token', res.data.token);
       setUser({
