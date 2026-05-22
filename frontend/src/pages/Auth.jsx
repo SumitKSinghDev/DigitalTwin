@@ -275,12 +275,16 @@ const Auth = () => {
   }, [otpRequired, isLogin]);
 
   return (
-    <div className="min-h-screen w-screen relative flex items-center justify-center bg-background px-4 py-8 overflow-hidden auth-page">
-      {/* Decorative ambient glowing orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-violet-500/10 blur-[150px] pointer-events-none" />
+    <div className="min-h-screen w-screen relative flex items-center justify-center bg-zinc-950 px-4 py-8 overflow-hidden auth-page">
+      {/* Cinematic subtle grid overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1.5px,transparent_1.5px),linear-gradient(to_bottom,#0f172a_1.5px,transparent_1.5px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-[0.35] pointer-events-none" />
+      
+      {/* Low opacity telemetry background glows */}
+      <div className="absolute top-[-20%] left-[-20%] w-[60vw] h-[60vw] rounded-full bg-indigo-500/8 blur-[130px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
+      <div className="absolute bottom-[-20%] right-[-20%] w-[70vw] h-[70vw] rounded-full bg-violet-600/8 blur-[160px] pointer-events-none animate-pulse" style={{ animationDuration: '12s' }} />
+      <div className="absolute top-[30%] left-[40%] w-[30vw] h-[30vw] rounded-full bg-indigo-400/3 blur-[90px] pointer-events-none" />
 
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 rounded-2xl border border-zinc-800/80 bg-zinc-950/60 backdrop-blur-xl shadow-2xl shadow-indigo-500/5 overflow-hidden min-h-[620px] z-10 animate-fade-in">
+      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 rounded-2xl border border-zinc-800/80 bg-zinc-950/40 backdrop-blur-xl shadow-2xl shadow-indigo-500/5 overflow-hidden min-h-[620px] z-10 animate-fade-in">
         
         {/* Left Side: Stunning Brand & Teaser */}
         <div className="relative hidden md:flex flex-col justify-between p-12 bg-gradient-to-br from-indigo-950/40 via-zinc-950 to-zinc-950 border-r border-zinc-900/60 overflow-hidden">
@@ -439,8 +443,19 @@ const Auth = () => {
         </div>
 
         {/* Right Side: Interactive Forms State Machine */}
-        <div className="flex flex-col justify-center p-8 md:p-12 bg-zinc-950">
-          <div className="w-full max-w-sm mx-auto">
+        <div className="flex flex-col justify-center p-4 md:p-8 bg-zinc-950/30 backdrop-blur-sm relative z-10 border-l border-zinc-900/50">
+          <div className="w-full max-w-md mx-auto p-8 rounded-2xl border border-white/[0.06] bg-zinc-950/70 backdrop-blur-2xl shadow-[0_24px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.03)] relative overflow-hidden group/card hover:border-white/[0.12] transition-all duration-500">
+            {/* Premium top border accent glow line */}
+            <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent opacity-60 pointer-events-none" />
+            
+            {/* Soft inner card ambient highlight */}
+            <div className="absolute -top-[40%] -left-[40%] w-[80%] h-[80%] rounded-full bg-indigo-500/5 blur-[80px] pointer-events-none group-hover/card:bg-indigo-500/8 transition-all duration-300" />
+            
+            {/* Floating subtle micro-dots for premium telemetry vibe */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+              <div className="absolute top-[20%] right-[15%] w-1 h-1 rounded-full bg-indigo-400 animate-pulse" />
+              <div className="absolute bottom-[30%] left-[10%] w-1 h-1 rounded-full bg-violet-400 animate-pulse" style={{ animationDelay: '1.5s' }} />
+            </div>
             
             {/* 1. OTP Verification Form View */}
             {otpRequired ? (
@@ -463,10 +478,10 @@ const Auth = () => {
                 </button>
 
                 <div className="mb-6">
-                  <h2 className="text-2xl font-extrabold tracking-tight text-white mb-2 flex items-center gap-2">
+                  <h2 className="text-2xl font-bold tracking-tight text-white mb-2 flex items-center gap-2">
                     Verify Your Core <Sparkles className="w-5 h-5 text-indigo-400 animate-pulse" />
                   </h2>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
+                  <p className="text-[13px] text-zinc-400/80 mt-1.5 leading-relaxed">
                     A secure 6-digit authorization passcode has been dispatched to your email address:
                     <span className="block font-bold text-indigo-400 mt-1 select-all">{email}</span>
                   </p>
@@ -487,7 +502,7 @@ const Auth = () => {
                 <form onSubmit={handleVerifyOtp} className="space-y-6">
                   {/* Segmented OTP input cells */}
                   <div>
-                    <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3 text-center">
+                    <label className="block text-xs font-semibold text-zinc-400/70 uppercase tracking-wider mb-3 text-center">
                       Verification Code
                     </label>
                     
@@ -505,7 +520,7 @@ const Auth = () => {
                           value={digit}
                           onChange={(e) => handleOtpChange(e.target.value, idx)}
                           onKeyDown={(e) => handleOtpKeyDown(e, idx)}
-                          className="w-12 h-14 rounded-xl border border-zinc-800 bg-zinc-900/60 text-center text-xl font-extrabold text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                          className="w-12 h-14 rounded-xl border border-zinc-800/80 bg-zinc-900/40 text-center text-xl font-extrabold text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/45 shadow-[inset_0_1px_2px_rgba(255,255,255,0.03),0_4px_12px_rgba(0,0,0,0.15)] hover:border-zinc-700/65 transition-all duration-300"
                         />
                       ))}
                     </div>
@@ -514,14 +529,14 @@ const Auth = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-600/20 active:scale-95 transition-all duration-150 flex items-center justify-center gap-2"
+                    className="w-full py-3.5 bg-gradient-to-r from-indigo-600 to-violet-650 hover:from-indigo-500 hover:to-violet-600 text-white rounded-xl text-sm font-bold shadow-md shadow-indigo-950/10 hover:shadow-indigo-500/10 active:scale-98 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                   >
                     {loading ? (
                       <span className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                     ) : (
                       <>
                         <span>Verify & Unlock Twin</span>
-                        <Zap className="w-4 h-4" />
+                        <Zap className="w-4 h-4 text-indigo-200 group-hover/btn:text-white transition-colors" />
                       </>
                     )}
                   </button>
@@ -554,10 +569,10 @@ const Auth = () => {
                 transition={{ duration: 0.3 }}
               >
                 <div className="mb-8">
-                  <h2 className="text-2xl font-extrabold tracking-tight text-white mb-2">
+                  <h2 className="text-2xl font-bold tracking-tight text-white mb-2">
                     {isLogin ? 'Welcome Back' : 'Get Started'}
                   </h2>
-                  <p className="text-xs text-zinc-500">
+                  <p className="text-[13px] text-zinc-400/80 mt-1.5 font-normal">
                     {isLogin ? 'Access your behavioral analytics dashboard.' : 'Initialize your personalized AI learning twin.'}
                   </p>
                 </div>
@@ -592,16 +607,16 @@ const Auth = () => {
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Full Name</label>
+                        <label className="block text-xs font-semibold text-zinc-400/70 uppercase tracking-wider mb-2">Full Name</label>
                         <div className="relative">
-                          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500/80" />
                           <input
                             type="text"
                             placeholder="e.g. Jane Smith"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required={!isLogin}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl text-sm glass-input font-medium bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            className="w-full pl-10 pr-4 py-3 rounded-xl text-sm font-medium bg-zinc-900/40 hover:bg-zinc-900/60 border border-zinc-800/85 hover:border-zinc-700/65 text-white placeholder-zinc-500/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/45 shadow-[inset_0_1px_2px_rgba(255,255,255,0.03),0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300"
                           />
                         </div>
                       </motion.div>
@@ -610,18 +625,18 @@ const Auth = () => {
 
                   {/* Email field */}
                   <div>
-                    <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-                      {isLogin ? 'Email Address' : 'Email Address'}
+                    <label className="block text-xs font-semibold text-zinc-400/70 uppercase tracking-wider mb-2">
+                      Email Address
                     </label>
                     <div className="relative">
-                      <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                      <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500/80" />
                       <input
                         type="email"
                         placeholder="you@example.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full pl-10 pr-4 py-3 rounded-xl text-sm glass-input font-medium bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl text-sm font-medium bg-zinc-900/40 hover:bg-zinc-900/60 border border-zinc-800/85 hover:border-zinc-700/65 text-white placeholder-zinc-500/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/45 shadow-[inset_0_1px_2px_rgba(255,255,255,0.03),0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300"
                       />
                     </div>
                   </div>
@@ -629,28 +644,28 @@ const Auth = () => {
                   {/* Password field */}
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Password</label>
+                      <label className="text-xs font-semibold text-zinc-400/70 uppercase tracking-wider">Password</label>
                       {isLogin && (
                         <button
                           type="button"
                           onClick={() => {
                             setSuccessMsg('Forgot password helper: A reset request placeholder. In production, this triggers an SMTP password link.');
                           }}
-                          className="text-[10px] text-zinc-500 hover:text-indigo-400 hover:underline font-bold"
+                          className="text-[10px] text-zinc-500 hover:text-indigo-400 font-semibold transition-colors"
                         >
                           Forgot Password?
                         </button>
                       )}
                     </div>
                     <div className="relative">
-                      <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                      <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500/80" />
                       <input
                         type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="w-full pl-10 pr-10 py-3 rounded-xl text-sm glass-input font-medium bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        className="w-full pl-10 pr-10 py-3 rounded-xl text-sm font-medium bg-zinc-900/40 hover:bg-zinc-900/60 border border-zinc-800/85 hover:border-zinc-700/65 text-white placeholder-zinc-500/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/45 shadow-[inset_0_1px_2px_rgba(255,255,255,0.03),0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300"
                       />
                       <button
                         type="button"
@@ -671,16 +686,16 @@ const Auth = () => {
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Confirm Password</label>
+                        <label className="block text-xs font-semibold text-zinc-400/70 uppercase tracking-wider mb-2">Confirm Password</label>
                         <div className="relative">
-                          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                          <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500/80" />
                           <input
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="••••••••"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required={!isLogin}
-                            className="w-full pl-10 pr-10 py-3 rounded-xl text-sm glass-input font-medium bg-zinc-900 border border-zinc-800 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            className="w-full pl-10 pr-10 py-3 rounded-xl text-sm font-medium bg-zinc-900/40 hover:bg-zinc-900/60 border border-zinc-800/85 hover:border-zinc-700/65 text-white placeholder-zinc-500/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/45 shadow-[inset_0_1px_2px_rgba(255,255,255,0.03),0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300"
                           />
                           <button
                             type="button"
@@ -697,17 +712,26 @@ const Auth = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3.5 mt-2 bg-indigo-600 hover:bg-indigo-650 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 active:scale-98 transition-all duration-150 flex items-center justify-center gap-2"
+                    className="w-full py-3.5 mt-2 bg-gradient-to-r from-indigo-600 to-violet-650 hover:from-indigo-500 hover:to-violet-600 text-white rounded-xl text-sm font-bold shadow-md shadow-indigo-950/10 hover:shadow-indigo-500/10 active:scale-98 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                   >
                     {loading ? (
                       <span className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                     ) : (
                       <>
                         <span>{isLogin ? 'Sync Twin Profile' : 'Initialize Twin'}</span>
-                        <Zap className="w-4 h-4" />
+                        <Zap className="w-4 h-4 text-indigo-200 group-hover/btn:text-white transition-colors" />
                       </>
                     )}
                   </button>
+
+                  {/* Micro telemetry status display */}
+                  <div className="mt-4 flex items-center justify-center gap-2 text-[10.5px] text-zinc-500 font-semibold tracking-wide">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                    </span>
+                    <span>Secure telemetry sync enabled</span>
+                  </div>
                 </form>
 
                 {/* Elegant separator */}
@@ -715,14 +739,33 @@ const Auth = () => {
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-zinc-850"></div>
                   </div>
-                  <span className="relative px-3 bg-zinc-950 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                  <span className="relative px-3 bg-zinc-950/80 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                     Or Continue With
                   </span>
                 </div>
 
-                {/* Native Google OAuth Integration to avoid session overlay glitches */}
-                <div className="flex justify-center w-full min-h-[44px]">
-                  <div id="googleSignInDiv" className="w-full flex justify-center"></div>
+                {/* Native Google OAuth Integration with premium styling overlay */}
+                <div className="relative flex justify-center w-full h-[46px] rounded-xl overflow-hidden bg-zinc-900/60 hover:bg-zinc-900/85 border border-zinc-800/85 hover:border-zinc-700/70 shadow-lg shadow-black/10 transition-all duration-300 group/google-btn">
+                  {/* Custom Styled Button Representation (visible underneath) */}
+                  <div className="absolute inset-0 flex items-center justify-center gap-3 pointer-events-none">
+                    {/* Google G Logo SVG */}
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                      <g transform="matrix(1, 0, 0, 1, 0, 0)">
+                        <path d="M21.35,11.1H12v2.7h5.38c-0.24,1.28 -0.96,2.37 -2.04,3.1v2.58h3.3c1.93,-1.78 3.04,-4.4 3.04,-7.48C21.68,11.83 21.56,11.4 21.35,11.1z" fill="#4285F4" />
+                        <path d="M12,20.62c2.6,0 4.78,-0.86 6.38,-2.34l-3.3,-2.58c-0.91,0.61 -2.08,0.98 -3.08,0.98 -2.38,0 -4.4,-1.61 -5.12,-3.78H3.46v2.66C5.07,18.8 8.35,20.62 12,20.62z" fill="#34A853" />
+                        <path d="M6.88,12.9a5.16,5.16 0 0 1 0,-3.2v-2.66H3.46a8.96,8.96 0 0 0 0,8.52L6.88,12.9z" fill="#FBBC05" />
+                        <path d="M12,6.72c1.41,0 2.68,0.49 3.68,1.44l2.76,-2.76C16.76,3.88 14.58,3.38 12,3.38c-3.65,0 -6.93,1.82 -8.54,4.98l3.42,2.66C7.6,8.33 9.62,6.72 12,6.72z" fill="#EA4335" />
+                      </g>
+                    </svg>
+                    <span className="text-sm font-medium text-zinc-300 group-hover/google-btn:text-white transition-colors">
+                      Continue with Google
+                    </span>
+                  </div>
+                  {/* Invisible real Google button overlay to securely capture click interaction */}
+                  <div 
+                    id="googleSignInDiv" 
+                    className="absolute inset-0 w-full h-full opacity-[0.01] z-10 cursor-pointer [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:cursor-pointer"
+                  />
                 </div>
 
                 {/* Switch View Toggle Trigger */}

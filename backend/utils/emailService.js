@@ -33,15 +33,16 @@ export const sendOtpEmail = async (email, otpCode, name = 'Student') => {
   }
 
   try {
+    console.log("SMTP IPv4 transport initialized");
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
       family: 4,
       auth: {
-        user,
-        pass,
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
       tls: {
         rejectUnauthorized: false,
