@@ -114,6 +114,32 @@ const Tracker = ({ triggerTwinRefresh }) => {
             <p className="text-zinc-500 text-sm mt-1">
               Feed your student digital twin with performance and recovery logs.
             </p>
+            <AnimatePresence>
+              {saveStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: -8 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -8 }}
+                  transition={{ type: "spring", stiffness: 380, damping: 24 }}
+                  className="mt-3 px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold flex items-center gap-2 w-fit select-none"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Digital Twin Telemetry Synced!</span>
+                </motion.div>
+              )}
+              {saveStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: -8 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -8 }}
+                  transition={{ type: "spring", stiffness: 380, damping: 24 }}
+                  className="mt-3 px-4 py-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold flex items-center gap-2 w-fit select-none"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                  <span>Sync Error. Try again.</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           
           {/* Date Picker Component */}
@@ -356,34 +382,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
           </form>
         )}
 
-        {/* Floating state indicators */}
-        <AnimatePresence>
-          {saveStatus === 'success' && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="fixed bottom-20 sm:bottom-6 left-4 right-4 mx-auto sm:left-auto sm:right-6 sm:mx-0 w-fit max-w-[calc(100%-2rem)] px-5 py-3 rounded-full border shadow-lg backdrop-blur-md flex items-center justify-center gap-2.5 z-[110] transition-all duration-300 bg-emerald-50/95 dark:bg-emerald-950/90 border-emerald-200/50 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300 shadow-emerald-500/10 dark:shadow-emerald-950/40 pb-safe"
-            >
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
-              <span className="text-xs font-bold leading-none tracking-wide whitespace-nowrap">Digital Twin Telemetry Synced!</span>
-            </motion.div>
-          )}
-
-          {saveStatus === 'error' && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="fixed bottom-20 sm:bottom-6 left-4 right-4 mx-auto sm:left-auto sm:right-6 sm:mx-0 w-fit max-w-[calc(100%-2rem)] px-5 py-3 rounded-full border shadow-lg backdrop-blur-md flex items-center justify-center gap-2.5 z-[110] transition-all duration-300 bg-rose-50/95 dark:bg-rose-950/90 border-rose-200/50 dark:border-rose-500/30 text-rose-800 dark:text-rose-300 shadow-rose-500/10 dark:shadow-rose-950/40 pb-safe"
-            >
-              <div className="w-2 h-2 rounded-full bg-rose-500 flex-shrink-0" />
-              <span className="text-xs font-bold leading-none tracking-wide whitespace-nowrap">Sync Error. Try again.</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Floating state indicators removed to prevent mobile overlays */}
 
       </div>
     </div>
