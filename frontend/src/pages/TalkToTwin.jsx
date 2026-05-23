@@ -219,7 +219,7 @@ How can I help you optimize your learning rhythm today?`,
   };
 
   return (
-    <div className="pr-8 py-8 min-h-screen flex flex-col justify-between">
+    <div className="px-4 md:px-0 md:pr-8 py-6 md:py-8 pb-28 md:pb-20 min-h-screen flex flex-col justify-between">
       <div className="max-w-5xl mx-auto w-full flex-1 flex flex-col space-y-6">
         
         {/* Top Header Row */}

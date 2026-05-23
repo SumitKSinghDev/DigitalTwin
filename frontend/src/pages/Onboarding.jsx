@@ -256,7 +256,7 @@ const Onboarding = () => {
                       key={style}
                       type="button"
                       onClick={() => setProductivityStyle(style)}
-                      className={`p-3 text-left border rounded-xl transition-all flex flex-col justify-between h-20 ${
+                      className={`p-3 text-left border rounded-xl transition-all flex flex-col justify-between h-auto min-h-[5.5rem] gap-1.5 ${
                         productivityStyle === style
                           ? 'bg-indigo-50 dark:bg-indigo-500/10 border-indigo-500/50 text-indigo-600 dark:text-white font-bold'
                           : 'bg-background dark:bg-zinc-950/60 border-border dark:border-zinc-800 text-text-secondary dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:bg-bg-secondary dark:hover:bg-zinc-950'
@@ -296,7 +296,7 @@ const Onboarding = () => {
                     >
                       {level === 'High' && <Flame className="w-3.5 h-3.5" />}
                       <span>{level}</span>
-                      <span className="xs:inline hidden"> Sensitivity</span>
+                      <span className="sm:inline hidden"> Sensitivity</span>
                     </button>
                   ))}
                 </div>
