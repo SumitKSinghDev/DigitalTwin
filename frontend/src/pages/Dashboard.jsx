@@ -714,7 +714,7 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
   const consistencyDetails = getConsistencyDetails(twinData.consistencyIndex);
 
   return (
-    <div className="px-4 md:px-0 md:pr-8 pt-6 md:pt-8 pb-28 md:pb-20 min-h-screen bg-background overflow-x-hidden">
+    <div className="px-4 md:px-0 md:pr-8 pt-20 md:pt-8 pb-28 md:pb-20 min-h-screen bg-background overflow-x-hidden">
       <motion.div 
         variants={containerVariants}
         initial="hidden"

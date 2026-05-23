@@ -219,7 +219,7 @@ How can I help you optimize your learning rhythm today?`,
   };
 
   return (
-    <div className="px-4 md:px-0 md:pr-8 pt-4 md:pt-8 pb-28 md:pb-20 h-[calc(100vh-1rem)] md:h-auto flex flex-col justify-between overflow-hidden md:overflow-visible">
+    <div className="px-4 md:px-0 md:pr-8 pt-16 md:pt-8 pb-28 md:pb-20 h-[calc(100vh-1rem)] md:h-auto flex flex-col justify-between overflow-hidden md:overflow-visible">
       <div className="max-w-5xl mx-auto w-full flex-1 flex flex-col space-y-4 md:space-y-6 h-full overflow-hidden">
         
         {/* Top Header Row */}

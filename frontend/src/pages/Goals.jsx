@@ -128,7 +128,7 @@ const Goals = ({ triggerGoalsRefresh }) => {
   }
 
   return (
-    <div className="px-4 md:px-0 md:pr-8 py-6 md:py-8 pb-28 md:pb-20 min-h-screen">
+    <div className="px-4 md:px-0 md:pr-8 pt-20 pb-28 md:py-8 md:pb-20 min-h-screen">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Title Header */}

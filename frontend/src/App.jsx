@@ -8,6 +8,7 @@ import api from './utils/api.js';
 import Sidebar from './components/Layout/Sidebar.jsx';
 import GlowBackground from './components/Layout/GlowBackground.jsx';
 import MobileNav from './components/Layout/MobileNav.jsx';
+import MobileHeader from './components/Layout/MobileHeader.jsx';
 
 // Pages (Lazy loaded for optimal performance and lower initial memory footprint)
 const Auth = React.lazy(() => import('./pages/Auth.jsx'));
@@ -252,7 +253,8 @@ const AppContent = () => {
         </Routes>
       </React.Suspense>
 
-      {/* Render Mobile Navigation bar globally on protected routes */}
+      {/* Render Mobile Header & Navigation bar globally on protected routes */}
+      {isAuthenticated && !isOnboarding && <MobileHeader twinStatus={twinData.twinStatus} />}
       {isAuthenticated && !isOnboarding && <MobileNav />}
     </div>
   );

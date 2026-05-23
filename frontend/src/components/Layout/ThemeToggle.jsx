@@ -3,8 +3,52 @@ import { useTheme } from '../../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 
-const ThemeToggle = ({ isCollapsed }) => {
+const ThemeToggle = ({ isCollapsed, isMobile }) => {
   const { theme, toggleTheme, setTheme } = useTheme();
+
+  if (isMobile) {
+    return (
+      <div className={`w-[76px] p-0.5 rounded-lg flex items-center relative select-none transition-all duration-300 border ${
+        theme === 'light'
+          ? 'bg-slate-100/80 border-slate-200/50 shadow-inner'
+          : 'bg-zinc-900/60 border-zinc-800/80'
+      }`}>
+        <div className="relative flex w-full items-center">
+          {/* Sliding Backdrop */}
+          <motion.div
+            className={`absolute h-6 rounded-md border w-[32px] ${
+              theme === 'light'
+                ? 'bg-white border-slate-200 shadow-sm'
+                : 'bg-card border-border/80 shadow'
+            }`}
+            initial={false}
+            animate={{
+              x: theme === 'light' ? '0px' : '36px',
+            }}
+            transition={{ type: 'spring', stiffness: 450, damping: 23 }}
+          />
+
+          {/* Light Tab */}
+          <button
+            onClick={() => setTheme('light')}
+            className={`z-10 w-8 h-6 flex items-center justify-center rounded-md cursor-pointer transition-colors`}
+            title="Light Mode"
+          >
+            <Sun size={13} className={theme === 'light' ? 'text-amber-500 fill-amber-500/10' : 'text-zinc-500'} />
+          </button>
+
+          {/* Dark Tab */}
+          <button
+            onClick={() => setTheme('dark')}
+            className={`z-10 w-8 h-6 flex items-center justify-center rounded-md cursor-pointer transition-colors ml-1`}
+            title="Dark Mode"
+          >
+            <Moon size={13} className={theme === 'dark' ? 'text-indigo-400 fill-indigo-400/10' : 'text-zinc-500'} />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (isCollapsed) {
     return (
