@@ -219,8 +219,8 @@ How can I help you optimize your learning rhythm today?`,
   };
 
   return (
-    <div className="px-4 md:px-0 md:pr-8 py-6 md:py-8 pb-28 md:pb-20 min-h-screen flex flex-col justify-between">
-      <div className="max-w-5xl mx-auto w-full flex-1 flex flex-col space-y-6">
+    <div className="px-4 md:px-0 md:pr-8 pt-4 md:pt-8 pb-28 md:pb-20 h-[calc(100vh-1rem)] md:h-auto flex flex-col justify-between overflow-hidden md:overflow-visible">
+      <div className="max-w-5xl mx-auto w-full flex-1 flex flex-col space-y-4 md:space-y-6 h-full overflow-hidden">
         
         {/* Top Header Row */}
         <div className="flex justify-between items-center w-full">
@@ -254,10 +254,10 @@ How can I help you optimize your learning rhythm today?`,
         </div>
 
         {/* Dynamic Chat Pane Layout (Split Screen on Lg: Interactive Orb on left, Chat on right) */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-6 items-stretch min-h-[500px]">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6 items-stretch min-h-[350px] lg:min-h-[500px] h-[calc(100vh-12rem)] md:h-auto overflow-hidden">
           
           {/* Column 1: Futuristic interactive AI Orb details block */}
-          <div className="lg:col-span-1 glass-panel-elevated panel-tint-bluish p-6 flex flex-col items-center justify-center text-center relative overflow-hidden min-h-[250px] lg:min-h-0">
+          <div className="hidden lg:flex lg:col-span-1 glass-panel-elevated panel-tint-bluish p-6 flex flex-col items-center justify-center text-center relative overflow-hidden min-h-[250px] lg:min-h-0">
             <div className="absolute top-[-30px] right-[-30px] w-36 h-36 bg-indigo-500/5 rounded-full blur-2xl pointer-events-none" />
             
             {/* Visual Avatar Core Container */}
@@ -394,10 +394,10 @@ How can I help you optimize your learning rhythm today?`,
           </div>
 
           {/* Column 2: Modern futuristic chat widget */}
-          <div className="lg:col-span-3 glass-panel-elevated panel-tint-neutral flex flex-col justify-between overflow-hidden relative border border-border/80">
+          <div className="lg:col-span-3 glass-panel-elevated panel-tint-neutral flex flex-col justify-between overflow-hidden relative border border-border/80 h-full">
             
             {/* Message Pane */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-4 max-h-[460px] custom-scrollbar scroll-smooth">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 max-h-[calc(100vh-23rem)] md:max-h-[460px] custom-scrollbar scroll-smooth">
               <AnimatePresence initial={false}>
                 {messages.map((msg, index) => {
                   const isTwin = msg.sender === 'twin';
