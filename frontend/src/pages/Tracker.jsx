@@ -100,7 +100,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
   };
 
   return (
-    <div className="px-4 md:px-0 md:pr-8 pt-6 pb-56 md:py-8 md:pb-20 min-h-screen">
+    <div className="px-4 md:px-0 md:pr-8 pt-6 pb-36 md:py-8 md:pb-20 min-h-screen">
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Page Title Header */}
@@ -269,7 +269,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
             </div>
 
             {/* FULL WIDTH SPANS: Task ratios and notes */}
-            <div className="md:col-span-2 glass-panel-elevated panel-tint-neutral p-6 grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 md:mb-0">
+            <div className="md:col-span-2 glass-panel-elevated panel-tint-neutral p-6 grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 md:mb-0">
               
               {/* Task Completed Inputs */}
               <div className="md:col-span-1 space-y-4">
