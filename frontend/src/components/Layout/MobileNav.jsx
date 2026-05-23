@@ -24,7 +24,7 @@ const MobileNav = () => {
 
   return (
     <nav 
-      className={`md:hidden fixed bottom-0 left-0 right-0 h-16 border-t backdrop-blur-lg z-50 flex items-center justify-around px-2 pb-safe select-none shadow-2xl transition-all duration-300 ${
+      className={`md:hidden fixed bottom-0 left-0 right-0 h-16 border-t backdrop-blur-lg z-[100] flex items-center justify-around px-2 pb-safe select-none shadow-2xl transition-all duration-300 ${
         theme === 'light'
           ? 'bg-white/80 border-slate-200/60 shadow-slate-200/40 text-slate-600'
           : 'bg-zinc-950/80 border-zinc-900/60 shadow-black/80 text-zinc-400'

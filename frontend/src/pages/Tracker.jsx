@@ -325,7 +325,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
             </div>
 
             {/* Submit Bar */}
-            <div className="md:col-span-2 fixed bottom-16 md:static left-0 right-0 p-4 md:p-0 bg-[#0a0c10]/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-t border-border/60 md:border-0 shadow-[0_-8px_20px_rgba(0,0,0,0.3)] md:shadow-none flex items-center justify-between gap-4 z-30 pb-safe">
+            <div className="md:col-span-2 fixed bottom-16 md:static left-0 right-0 p-4 md:p-0 bg-[#0a0c10]/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-t border-border/60 md:border-0 shadow-[0_-8px_20px_rgba(0,0,0,0.3)] md:shadow-none flex items-center justify-between gap-4 z-[90] pb-safe">
               <div className="hidden md:flex text-xs font-semibold text-zinc-500 items-center gap-2">
                 <Sparkles className="w-4 h-4 text-indigo-400" />
                 <span>Heuristic indicators update twin state calculations instantly.</span>
@@ -357,7 +357,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
-              className="fixed bottom-6 right-6 px-5 py-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-400 shadow-xl shadow-emerald-950/20 backdrop-blur-md flex items-center gap-3 z-50"
+              className="fixed bottom-6 right-6 px-5 py-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-400 shadow-xl shadow-emerald-950/20 backdrop-blur-md flex items-center gap-3 z-[110]"
             >
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               <span>Digital Twin Telemetry Synced Successfully!</span>
@@ -369,7 +369,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
-              className="fixed bottom-6 right-6 px-5 py-3.5 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs font-bold text-rose-400 shadow-xl shadow-rose-950/20 backdrop-blur-md flex items-center gap-3 z-50"
+              className="fixed bottom-6 right-6 px-5 py-3.5 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs font-bold text-rose-400 shadow-xl shadow-rose-950/20 backdrop-blur-md flex items-center gap-3 z-[110]"
             >
               <div className="w-2 h-2 rounded-full bg-rose-500" />
               <span>Database Connection Error. Try saving again.</span>
