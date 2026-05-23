@@ -529,7 +529,11 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+      const isAtBottom = window.innerHeight + currentScrollY >= document.documentElement.scrollHeight - 30; // 30px buffer threshold
+
+      if (isAtBottom) {
+        setShowFloatingButton(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setShowFloatingButton(false);
       } else {
         setShowFloatingButton(true);
