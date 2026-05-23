@@ -102,7 +102,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
   };
 
   return (
-    <div className="px-4 md:px-0 md:pr-8 pt-20 pb-56 md:py-8 md:pb-20 min-h-screen">
+    <div className="px-4 md:px-0 md:pr-8 pt-20 pb-64 md:py-8 md:pb-20 min-h-screen">
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Page Title Header */}
