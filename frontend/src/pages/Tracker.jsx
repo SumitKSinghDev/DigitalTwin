@@ -102,7 +102,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
   };
 
   return (
-    <div className="px-4 md:px-0 md:pr-8 pt-20 pb-36 md:py-8 md:pb-20 min-h-screen">
+    <div className="px-4 md:px-0 md:pr-8 pt-20 pb-56 md:py-8 md:pb-20 min-h-screen">
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Page Title Header */}
@@ -327,7 +327,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
             </div>
 
             {/* Submit Bar */}
-            <div className={`md:col-span-2 fixed bottom-16 md:static left-0 right-0 p-4 md:p-0 backdrop-blur-md md:backdrop-blur-none border-t md:border-0 md:shadow-none flex items-center justify-between gap-4 z-[90] pb-safe transition-all duration-300 ${
+            <div className={`md:col-span-2 fixed bottom-16 md:static left-0 right-0 py-3 px-4 md:p-0 backdrop-blur-md md:backdrop-blur-none border-t md:border-0 md:shadow-none flex items-center justify-between gap-4 z-[90] transition-all duration-300 ${
               theme === 'light'
                 ? 'bg-white/90 border-slate-100/80 shadow-[0_-6px_20px_rgba(99,102,241,0.04)]'
                 : 'bg-[#0a0c10]/95 border-border/60 shadow-[0_-8px_20px_rgba(0,0,0,0.3)]'
