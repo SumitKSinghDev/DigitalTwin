@@ -52,20 +52,20 @@ const Logo = ({ className = "w-6 h-6", glow = true }) => {
         </defs>
         
         {/* Outer dotted orbital paths */}
-        <circle cx="50" cy="50" r="42" stroke="url(#logoGrad)" strokeWidth={isLight ? "1.5" : "1.2"} strokeDasharray="3 5" opacity={isLight ? "0.6" : "0.35"} />
+        <circle cx="50" cy="50" r="42" stroke={isLight ? "#6366f1" : "#4f46e5"} strokeWidth={isLight ? "1.5" : "1.2"} strokeDasharray="3 5" opacity={isLight ? "0.6" : "0.35"} />
         
         {/* Neural/SaaS geometric polygon web structure */}
-        <polygon points="50,16 79,32 79,68 50,84 21,68 21,32" stroke="url(#logoGrad)" strokeWidth={isLight ? "2.5" : "2"} strokeLinejoin="round" />
-        <polygon points="50,28 69,39 69,61 50,72 31,61 31,39" stroke="url(#logoGrad)" strokeWidth={isLight ? "1.5" : "1"} strokeLinejoin="round" strokeDasharray="2 3" opacity={isLight ? "0.8" : "0.6"} />
+        <polygon points="50,16 79,32 79,68 50,84 21,68 21,32" stroke={isLight ? "#4f46e5" : "#8b5cf6"} strokeWidth={isLight ? "2.5" : "2"} strokeLinejoin="round" />
+        <polygon points="50,28 69,39 69,61 50,72 31,61 31,39" stroke={isLight ? "#7c3aed" : "#c084fc"} strokeWidth={isLight ? "1.5" : "1"} strokeLinejoin="round" strokeDasharray="2 3" opacity={isLight ? "0.8" : "0.6"} />
         
         {/* Symmetric coordinate connection axes */}
-        <line x1="50" y1="16" x2="50" y2="84" stroke="url(#logoGrad)" strokeWidth={isLight ? "1" : "0.8"} strokeDasharray="4 4" opacity={isLight ? "0.6" : "0.5"} />
-        <line x1="21" y1="32" x2="79" y2="68" stroke="url(#logoGrad)" strokeWidth={isLight ? "1" : "0.8"} strokeDasharray="4 4" opacity={isLight ? "0.6" : "0.5"} />
-        <line x1="21" y1="68" x2="79" y2="32" stroke="url(#logoGrad)" strokeWidth={isLight ? "1" : "0.8"} strokeDasharray="4 4" opacity={isLight ? "0.6" : "0.5"} />
+        <line x1="50" y1="16" x2="50" y2="84" stroke={isLight ? "#818cf8" : "#6366f1"} strokeWidth={isLight ? "1" : "0.8"} strokeDasharray="4 4" opacity={isLight ? "0.6" : "0.5"} />
+        <line x1="21" y1="32" x2="79" y2="68" stroke={isLight ? "#818cf8" : "#6366f1"} strokeWidth={isLight ? "1" : "0.8"} strokeDasharray="4 4" opacity={isLight ? "0.6" : "0.5"} />
+        <line x1="21" y1="68" x2="79" y2="32" stroke={isLight ? "#818cf8" : "#6366f1"} strokeWidth={isLight ? "1" : "0.8"} strokeDasharray="4 4" opacity={isLight ? "0.6" : "0.5"} />
         
         {/* Central synchronizing core */}
-        <circle cx="50" cy="50" r="13" fill="url(#glowGrad)" />
-        <circle cx="50" cy="50" r="8" fill="url(#logoGrad)" />
+        <circle cx="50" cy="50" r="13" fill={isLight ? "rgba(99, 102, 241, 0.15)" : "rgba(129, 140, 248, 0.3)"} />
+        <circle cx="50" cy="50" r="8" fill={isLight ? "#4f46e5" : "#8b5cf6"} />
         <circle cx="50" cy="50" r="3" fill="#ffffff" />
         
         {/* Interactive network node elements */}
