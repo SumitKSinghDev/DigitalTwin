@@ -60,11 +60,46 @@ const Analytics = () => {
     fetchLogs();
   }, []);
 
-  // Filter logs based on selected timeframe
+  // Filter logs based on selected timeframe by actual calendar dates
   const getFilteredData = () => {
     if (timeframe === 'all') return logs;
     const count = parseInt(timeframe);
-    return logs.slice(-count);
+    
+    // Generate dates for the last N calendar days
+    const dates = [];
+    const today = new Date();
+    for (let i = count - 1; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(today.getDate() - i);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      dates.push(`${year}-${month}-${day}`);
+    }
+
+    return dates.map(dateStr => {
+      // Find a matching log for this specific date string
+      const foundLog = logs.find(log => {
+        const logDateOnly = log.date && log.date.includes('T') ? log.date.split('T')[0] : log.date;
+        return logDateOnly === dateStr;
+      });
+
+      if (foundLog) {
+        return foundLog;
+      }
+
+      // Return a blank placeholder log to preserve timeline continuity
+      return {
+        date: dateStr,
+        studyHours: 0,
+        sleepHours: 0,
+        stressLevel: 0,
+        focusLevel: 0,
+        tasksCompleted: 0,
+        tasksTotal: 0,
+        isPlaceholder: true
+      };
+    });
   };
 
   const filteredLogs = getFilteredData();
@@ -87,14 +122,17 @@ const Analytics = () => {
       'Stress Level': log.stressLevel,
       'Focus Quality': log.focusLevel,
       'Productivity Score': getProductivityScore(log),
+      isPlaceholder: log.isPlaceholder || false,
     };
   });
 
   // Calculate high-level stats for the current filtered timeframe
   const calculateAggregates = () => {
-    if (chartData.length === 0) return { avgStudy: 0, avgSleep: 0, avgStress: 0, avgProd: 0 };
+    // Exclude placeholders from actual study/sleep averages
+    const activeLogs = chartData.filter(d => !d.isPlaceholder);
+    if (activeLogs.length === 0) return { avgStudy: 0, avgSleep: 0, avgStress: 0, avgProd: 0 };
     
-    const totals = chartData.reduce((acc, curr) => {
+    const totals = activeLogs.reduce((acc, curr) => {
       acc.study += curr['Study Hours'];
       acc.sleep += curr['Sleep Hours'];
       acc.stress += curr['Stress Level'];
@@ -102,7 +140,7 @@ const Analytics = () => {
       return acc;
     }, { study: 0, sleep: 0, stress: 0, prod: 0 });
 
-    const len = chartData.length;
+    const len = activeLogs.length;
     return {
       avgStudy: Math.round((totals.study / len) * 10) / 10,
       avgSleep: Math.round((totals.sleep / len) * 10) / 10,
