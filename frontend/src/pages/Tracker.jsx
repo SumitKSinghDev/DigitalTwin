@@ -325,8 +325,8 @@ const Tracker = ({ triggerTwinRefresh }) => {
             </div>
 
             {/* Submit Bar */}
-            <div className="md:col-span-2 flex items-center justify-between gap-4 pt-2">
-              <div className="text-xs font-semibold text-zinc-500 flex items-center gap-2">
+            <div className="md:col-span-2 fixed bottom-16 md:static left-0 right-0 p-4 md:p-0 bg-[#0a0c10]/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-t border-border/60 md:border-0 shadow-[0_-8px_20px_rgba(0,0,0,0.3)] md:shadow-none flex items-center justify-between gap-4 z-30 pb-safe">
+              <div className="hidden md:flex text-xs font-semibold text-zinc-500 items-center gap-2">
                 <Sparkles className="w-4 h-4 text-indigo-400" />
                 <span>Heuristic indicators update twin state calculations instantly.</span>
               </div>
@@ -334,7 +334,7 @@ const Tracker = ({ triggerTwinRefresh }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="py-3 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-600/25 active:scale-95 hover:shadow-indigo-600/35 transition-all duration-150 flex items-center gap-2"
+                className="w-full md:w-auto py-3.5 md:py-3 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-600/25 active:scale-95 hover:shadow-indigo-600/35 transition-all duration-150 flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <span className="w-4 h-4 rounded-full border-2 border-white/20 border-t-white animate-spin" />
