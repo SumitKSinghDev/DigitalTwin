@@ -276,7 +276,7 @@ const FocusHeatmap = ({ logs, timeframe }) => {
     <div ref={containerRef} className="space-y-4 relative">
       <div 
         onScroll={() => setHoveredCell(null)}
-        className="max-h-[220px] overflow-y-auto pr-1.5 space-y-1 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent"
+        className="max-h-[220px] overflow-x-auto overflow-y-auto pr-1.5 space-y-1.5 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent"
       >
         {heatmapDays.map((day) => {
           const log = logs.find(l => {
@@ -287,7 +287,7 @@ const FocusHeatmap = ({ logs, timeframe }) => {
           const isLogged = !!log;
 
           return (
-            <div key={day.dateStr} className="flex items-center gap-1.5 h-3">
+            <div key={day.dateStr} className="flex items-center gap-1.5 h-3 min-w-[320px] sm:min-w-0">
               <span className="text-[9px] text-zinc-500 w-10 flex-shrink-0 font-semibold text-left">{day.label}</span>
               <div className="flex gap-0.5 sm:gap-1 flex-1">
                 {Array.from({ length: 24 }).map((_, hIdx) => {
@@ -330,6 +330,13 @@ const FocusHeatmap = ({ logs, timeframe }) => {
             </div>
           );
         })}
+
+        {/* Time Axis Labels (Inside Scrollable Area for alignment) */}
+        <div className="flex justify-between pl-11 text-[9px] text-zinc-500 font-bold uppercase tracking-wider pt-2 pb-1 min-w-[320px] sm:min-w-0">
+          {hourLabels.map((lbl) => (
+            <span key={lbl}>{lbl}</span>
+          ))}
+        </div>
       </div>
       
       {/* Dynamic Hover Tooltip Box */}
@@ -431,13 +438,6 @@ const FocusHeatmap = ({ logs, timeframe }) => {
           }`} />
         </div>
       )}
-      
-      {/* Time Axis Labels */}
-      <div className="flex justify-between pl-11 text-[9px] text-zinc-500 font-bold uppercase tracking-wider pb-1">
-        {hourLabels.map((lbl) => (
-          <span key={lbl}>{lbl}</span>
-        ))}
-      </div>
 
       {/* Premium Subtitle Legend */}
       <div className="flex items-center justify-center gap-4 text-[9px] font-bold text-zinc-500 pt-2 border-t border-[#2A3142]/40">
@@ -706,10 +706,12 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
           className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-border/40 pb-4"
         >
           <div>
-            <h1 className={`text-3xl font-black tracking-tight flex items-center gap-2 ${
+            <h1 className={`text-xl sm:text-2xl md:text-3xl font-black tracking-tight flex flex-wrap items-center gap-1.5 ${
               theme === 'light' ? 'text-slate-900' : 'text-white'
             }`}>
-              Good Evening, {user?.username || 'Sumit'}! 👋
+              <span>Good Evening,</span>
+              <span className="truncate max-w-[160px] xs:max-w-[220px] sm:max-w-none">{user?.username || 'Sumit'}</span>
+              <span>! 👋</span>
             </h1>
             <p className={`text-xs font-semibold uppercase tracking-wider mt-1 flex items-center gap-1.5 ${
               theme === 'light' ? 'text-slate-500' : 'text-zinc-400'

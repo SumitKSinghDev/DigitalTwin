@@ -126,7 +126,7 @@ const AppContent = () => {
     );
   }
 
-  const mainClasses = `flex-1 min-h-screen transition-all duration-300 ${isCollapsed ? 'pl-28' : 'pl-72'}`;
+  const mainClasses = `flex-1 min-h-screen transition-all duration-300 ${isCollapsed ? 'pl-24 md:pl-28' : 'pl-24 md:pl-72'}`;
 
   return (
     <div className="relative min-h-screen text-zinc-100 bg-background">

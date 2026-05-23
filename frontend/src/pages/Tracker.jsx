@@ -100,13 +100,13 @@ const Tracker = ({ triggerTwinRefresh }) => {
   };
 
   return (
-    <div className="pr-8 py-8 min-h-screen">
+    <div className="pr-4 md:pr-8 py-6 md:py-8 min-h-screen">
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Page Title Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400 bg-clip-text text-transparent">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400 bg-clip-text text-transparent">
               Daily Telemetry Log
             </h1>
             <p className="text-zinc-500 text-sm mt-1">
