@@ -443,8 +443,8 @@ const Auth = () => {
         </div>
 
         {/* Right Side: Interactive Forms State Machine */}
-        <div className="flex flex-col justify-center p-4 md:p-8 bg-zinc-950/30 backdrop-blur-sm relative z-10 border-l border-zinc-900/50">
-          <div className="w-full max-w-md mx-auto p-8 rounded-2xl border border-white/[0.06] bg-zinc-950/70 backdrop-blur-2xl shadow-[0_24px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.03)] relative overflow-hidden group/card hover:border-white/[0.12] transition-all duration-500">
+        <div className="flex flex-col justify-center px-1.5 py-4 xs:p-4 md:p-8 bg-zinc-950/30 backdrop-blur-sm relative z-10 md:border-l border-zinc-900/50">
+          <div className="w-full max-w-md mx-auto p-4 xs:p-6 sm:p-8 rounded-2xl border border-white/[0.06] bg-zinc-950/70 backdrop-blur-2xl shadow-[0_24px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.03)] relative overflow-hidden group/card hover:border-white/[0.12] transition-all duration-500">
             {/* Premium top border accent glow line */}
             <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent opacity-60 pointer-events-none" />
             
@@ -520,7 +520,7 @@ const Auth = () => {
                           value={digit}
                           onChange={(e) => handleOtpChange(e.target.value, idx)}
                           onKeyDown={(e) => handleOtpKeyDown(e, idx)}
-                          className="w-12 h-14 rounded-xl border border-zinc-800/80 bg-zinc-900/40 text-center text-xl font-extrabold text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/45 shadow-[inset_0_1px_2px_rgba(255,255,255,0.03),0_4px_12px_rgba(0,0,0,0.15)] hover:border-zinc-700/65 transition-all duration-300"
+                          className="w-8 xs:w-11 sm:w-12 h-11 xs:h-13 sm:h-14 rounded-xl border border-zinc-800/80 bg-zinc-900/40 text-center text-base sm:text-xl font-extrabold text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/45 shadow-[inset_0_1px_2px_rgba(255,255,255,0.03),0_4px_12px_rgba(0,0,0,0.15)] hover:border-zinc-700/65 transition-all duration-300"
                         />
                       ))}
                     </div>

@@ -163,7 +163,7 @@ const Onboarding = () => {
                 <label className="block text-zinc-300 font-bold text-xs uppercase tracking-wider mb-3">
                   Preferred Study Slot
                 </label>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-4">
                   <button
                     type="button"
                     onClick={() => setPreferredStudyTiming('Morning')}
@@ -245,7 +245,7 @@ const Onboarding = () => {
                 <label className="block text-zinc-300 font-bold text-xs uppercase tracking-wider mb-2">
                   Study Style
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
                   {[
                     'Deep Focus Sprints',
                     'Consistent Pomodoro Blocks',
@@ -289,13 +289,14 @@ const Onboarding = () => {
                           ? level === 'High'
                             ? 'bg-red-50 dark:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30'
                             : level === 'Medium'
-                            ? 'bg-amber-50 dark:bg-amber-500/20 text-amber-605 dark:text-amber-400 border border-amber-500/30'
+                            ? 'bg-amber-50 dark:bg-amber-500/20 text-amber-650 dark:text-amber-400 border border-amber-500/30'
                             : 'bg-emerald-50 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
-                          : 'text-zinc-500 hover:text-zinc-305'
+                          : 'text-zinc-500 hover:text-zinc-350'
                       }`}
                     >
                       {level === 'High' && <Flame className="w-3.5 h-3.5" />}
-                      {level} Sensitivity
+                      <span>{level}</span>
+                      <span className="xs:inline hidden"> Sensitivity</span>
                     </button>
                   ))}
                 </div>
@@ -387,7 +388,7 @@ const Onboarding = () => {
 
       <div className="w-full max-w-xl relative">
         {/* Onboarding Wizard Card */}
-        <div className="bg-card dark:bg-zinc-900/60 backdrop-blur-xl border border-border dark:border-zinc-800/80 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+        <div className="bg-card dark:bg-zinc-900/60 backdrop-blur-xl border border-border dark:border-zinc-800/80 rounded-3xl p-5 xs:p-6 sm:p-8 shadow-2xl relative overflow-hidden">
           {/* Header Progress indicators */}
           {step < 4 && (
             <div className="flex items-center justify-between mb-8">
