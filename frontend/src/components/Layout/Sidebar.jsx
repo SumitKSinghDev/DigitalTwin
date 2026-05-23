@@ -48,7 +48,7 @@ const Sidebar = ({ twinStatus, isCollapsed, onToggleCollapse }) => {
   };
 
   return (
-    <aside className={`h-screen fixed left-0 top-0 sidebar-glass flex flex-col justify-between py-6 transition-all duration-300 z-20 ${
+    <aside className={`h-screen fixed left-0 top-0 sidebar-glass flex-col justify-between py-6 transition-all duration-300 z-20 hidden md:flex ${
       isCollapsed ? 'w-20 px-3' : 'w-64 px-4'
     }`}>
       {/* Floating Toggle Button */}

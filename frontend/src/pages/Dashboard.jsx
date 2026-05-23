@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import api from '../utils/api.js';
 import TwinAvatar from '../components/Dashboard/TwinAvatar.jsx';
+const MemoizedTwinAvatar = React.memo(TwinAvatar);
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -38,7 +39,7 @@ import {
 import { getDynamicInsights } from '../utils/insightHelper.jsx';
 
 // Custom SVG Circular Progress Ring for Productivity (Hierarchical & Animated)
-const ProductivityRing = ({ score }) => {
+const ProductivityRing = React.memo(({ score }) => {
   const { theme } = useTheme();
   const radius = 27;
   const circumference = 2 * Math.PI * radius;
@@ -71,10 +72,10 @@ const ProductivityRing = ({ score }) => {
       </svg>
     </div>
   );
-};
+});
 
 // Custom SVG Circular Progress Ring for Burnout Risk (Hierarchical & Animated)
-const BurnoutDial = ({ score, level }) => {
+const BurnoutDial = React.memo(({ score, level }) => {
   const { theme } = useTheme();
   const radius = 27;
   const circumference = 2 * Math.PI * radius;
@@ -105,10 +106,10 @@ const BurnoutDial = ({ score, level }) => {
       </svg>
     </div>
   );
-};
+});
 
 // Custom SVG Circular Progress Ring for Focus Consistency (Hierarchical & Animated)
-const ConsistencyRing = ({ score }) => {
+const ConsistencyRing = React.memo(({ score }) => {
   const { theme } = useTheme();
   const radius = 27;
   const circumference = 2 * Math.PI * radius;
@@ -141,10 +142,10 @@ const ConsistencyRing = ({ score }) => {
       </svg>
     </div>
   );
-};
+});
 
 // Sparkline Mini Chart for Weekly Growth Card
-const GrowthSparkline = () => {
+const GrowthSparkline = React.memo(() => {
   const data = [
     { name: 'Mon', value: 30 },
     { name: 'Tue', value: 40 },
@@ -177,7 +178,7 @@ const GrowthSparkline = () => {
       </ResponsiveContainer>
     </div>
   );
-};
+});
 
 // Focus Heatmap Grid (Dynamic timeframe vs Hours of the Day)
 const FocusHeatmap = ({ logs, timeframe }) => {
@@ -692,7 +693,7 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
   const consistencyDetails = getConsistencyDetails(twinData.consistencyIndex);
 
   return (
-    <div className="pr-8 pt-8 pb-20 min-h-screen bg-background overflow-x-hidden">
+    <div className="px-4 md:px-0 md:pr-8 pt-6 md:pt-8 pb-28 md:pb-20 min-h-screen bg-background overflow-x-hidden">
       <motion.div 
         variants={containerVariants}
         initial="hidden"
@@ -1267,7 +1268,7 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
 
             {/* Pulsating interactive mascot orb */}
             <div className="flex-1 flex items-center justify-center py-1 select-none">
-              <TwinAvatar status={twinData.twinStatus} username={user?.username} />
+              <MemoizedTwinAvatar status={twinData.twinStatus} username={user?.username} />
             </div>
 
             {/* Interacting gradient CTAs */}

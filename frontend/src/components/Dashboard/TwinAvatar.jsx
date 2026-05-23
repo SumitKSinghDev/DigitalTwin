@@ -291,4 +291,4 @@ const TwinAvatar = ({ status, username }) => {
   );
 };
 
-export default TwinAvatar;
+export default React.memo(TwinAvatar);

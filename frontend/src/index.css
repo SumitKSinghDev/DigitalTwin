@@ -588,4 +588,85 @@ html.light div.behavior-insight-banner p.behavior-insight-text {
   color: #4A4E69 !important; /* Premium high-contrast slate text */
 }
 
+/* ==========================================================================
+   🎯 PREMIUM MOBILE HARDWARE & PERFORMANCE ACCELERATION BLOCK
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* 1. Completely disable heavy, expensive animated background glow circles to save GPU */
+  .glow-circle {
+    display: none !important;
+  }
+
+  /* 2. Replace costly backdrop blurs and complex shadows with flat, fast-rendering surfaces */
+  .glass-panel,
+  .glass-panel-elevated,
+  .sidebar-glass,
+  .bg-card,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  html.light .glass-panel,
+  html.light .glass-panel-elevated,
+  html.light .bg-card {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(0, 0, 0, 0.06) !important;
+  }
+  
+  html.dark .glass-panel,
+  html.dark .glass-panel-elevated,
+  html.dark .bg-card,
+  html.dark .sidebar-glass {
+    background-color: #0d0f14 !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+  }
+
+  /* 3. Stop CPU-heavy continuous loop animations, breathing filters, and ping alerts on phone */
+  .animate-pulse,
+  .animate-pulse-slow,
+  .animate-ping,
+  .animate-bounce,
+  .reactor-orb-core,
+  .reactor-orb-core::before,
+  .reactor-orb-core::after {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* 4. Disable expensive hardware filters and glow shadows */
+  .orb-glow,
+  .glow-mesh,
+  .glow-mesh::before {
+    filter: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 5. Polish touch-ergonomics padding and margins */
+  .pr-8, .pr-4 {
+    padding-right: 12px !important;
+  }
+  .pl-8, .pl-4 {
+    padding-left: 12px !important;
+  }
+  .py-8, .py-6 {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+  .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: 1.25rem !important; /* Standardize tight vertical gaps */
+    margin-bottom: 0px !important;
+  }
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: 1rem !important;
+    margin-bottom: 0px !important;
+  }
+}
+
 

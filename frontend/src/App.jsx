@@ -7,16 +7,17 @@ import api from './utils/api.js';
 // Layout Components
 import Sidebar from './components/Layout/Sidebar.jsx';
 import GlowBackground from './components/Layout/GlowBackground.jsx';
+import MobileNav from './components/Layout/MobileNav.jsx';
 
-// Pages
-import Auth from './pages/Auth.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import Tracker from './pages/Tracker.jsx';
-import Analytics from './pages/Analytics.jsx';
-import Goals from './pages/Goals.jsx';
-import Insights from './pages/Insights.jsx';
-import TalkToTwin from './pages/TalkToTwin.jsx';
-import Onboarding from './pages/Onboarding.jsx';
+// Pages (Lazy loaded for optimal performance and lower initial memory footprint)
+const Auth = React.lazy(() => import('./pages/Auth.jsx'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard.jsx'));
+const Tracker = React.lazy(() => import('./pages/Tracker.jsx'));
+const Analytics = React.lazy(() => import('./pages/Analytics.jsx'));
+const Goals = React.lazy(() => import('./pages/Goals.jsx'));
+const Insights = React.lazy(() => import('./pages/Insights.jsx'));
+const TalkToTwin = React.lazy(() => import('./pages/TalkToTwin.jsx'));
+const Onboarding = React.lazy(() => import('./pages/Onboarding.jsx'));
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children }) => {
@@ -126,120 +127,131 @@ const AppContent = () => {
     );
   }
 
-  const mainClasses = `flex-1 min-h-screen transition-all duration-300 ${isCollapsed ? 'pl-24 md:pl-28' : 'pl-24 md:pl-72'}`;
+  const mainClasses = `flex-1 min-h-screen transition-all duration-300 pl-0 ${isCollapsed ? 'md:pl-28' : 'md:pl-72'}`;
 
   return (
     <div className="relative min-h-screen text-zinc-100 bg-background">
       {/* Visual background canvas */}
       <GlowBackground />
 
-      <Routes>
-        {/* Auth entry route */}
-        <Route path="/auth" element={!isAuthenticated ? <Auth /> : <Navigate to="/" replace />} />
+      <React.Suspense 
+        fallback={
+          <div className="h-screen w-screen bg-background flex items-center justify-center">
+            <span className="w-8 h-8 rounded-full border-2 border-indigo-500/20 border-t-indigo-500 animate-spin" />
+          </div>
+        }
+      >
+        <Routes>
+          {/* Auth entry route */}
+          <Route path="/auth" element={!isAuthenticated ? <Auth /> : <Navigate to="/" replace />} />
 
-        {/* Dashboard panel */}
-        <Route 
-          path="/" 
-          element={
-            <ProtectedRoute>
-              <div className="flex">
-                <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
-                <main className={mainClasses}>
-                  <Dashboard twinData={twinData} loadingTwin={loadingTwin} goalsCount={goalsRefreshCounter} />
-                </main>
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+          {/* Dashboard panel */}
+          <Route 
+            path="/" 
+            element={
+              <ProtectedRoute>
+                <div className="flex">
+                  <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
+                  <main className={mainClasses}>
+                    <Dashboard twinData={twinData} loadingTwin={loadingTwin} goalsCount={goalsRefreshCounter} />
+                  </main>
+                </div>
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* Tracker logging panel */}
-        <Route 
-          path="/tracker" 
-          element={
-            <ProtectedRoute>
-              <div className="flex">
-                <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
-                <main className={mainClasses}>
-                  <Tracker triggerTwinRefresh={triggerTwinRefresh} />
-                </main>
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+          {/* Tracker logging panel */}
+          <Route 
+            path="/tracker" 
+            element={
+              <ProtectedRoute>
+                <div className="flex">
+                  <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
+                  <main className={mainClasses}>
+                    <Tracker triggerTwinRefresh={triggerTwinRefresh} />
+                  </main>
+                </div>
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* Analytics panel */}
-        <Route 
-          path="/analytics" 
-          element={
-            <ProtectedRoute>
-              <div className="flex">
-                <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
-                <main className={mainClasses}>
-                  <Analytics />
-                </main>
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+          {/* Analytics panel */}
+          <Route 
+            path="/analytics" 
+            element={
+              <ProtectedRoute>
+                <div className="flex">
+                  <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
+                  <main className={mainClasses}>
+                    <Analytics />
+                  </main>
+                </div>
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* Goals panel */}
-        <Route 
-          path="/goals" 
-          element={
-            <ProtectedRoute>
-              <div className="flex">
-                <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
-                <main className={mainClasses}>
-                  <Goals triggerGoalsRefresh={triggerTwinRefresh} />
-                </main>
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+          {/* Goals panel */}
+          <Route 
+            path="/goals" 
+            element={
+              <ProtectedRoute>
+                <div className="flex">
+                  <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
+                  <main className={mainClasses}>
+                    <Goals triggerGoalsRefresh={triggerTwinRefresh} />
+                  </main>
+                </div>
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* Insights panel */}
-        <Route 
-          path="/insights" 
-          element={
-            <ProtectedRoute>
-              <div className="flex">
-                <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
-                <main className={mainClasses}>
-                  <Insights twinData={twinData} loadingTwin={loadingTwin} />
-                </main>
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+          {/* Insights panel */}
+          <Route 
+            path="/insights" 
+            element={
+              <ProtectedRoute>
+                <div className="flex">
+                  <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
+                  <main className={mainClasses}>
+                    <Insights twinData={twinData} loadingTwin={loadingTwin} />
+                  </main>
+                </div>
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* Talk to Twin Conversational AI Panel */}
-        <Route 
-          path="/talk" 
-          element={
-            <ProtectedRoute>
-              <div className="flex">
-                <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
-                <main className={mainClasses}>
-                  <TalkToTwin />
-                </main>
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+          {/* Talk to Twin Conversational AI Panel */}
+          <Route 
+            path="/talk" 
+            element={
+              <ProtectedRoute>
+                <div className="flex">
+                  <Sidebar twinStatus={twinData.twinStatus} isCollapsed={isCollapsed} onToggleCollapse={toggleSidebar} />
+                  <main className={mainClasses}>
+                    <TalkToTwin />
+                  </main>
+                </div>
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* Onboarding Wizard Setup */}
-        <Route 
-          path="/onboarding" 
-          element={
-            <OnboardingRoute>
-              <Onboarding />
-            </OnboardingRoute>
-          } 
-        />
+          {/* Onboarding Wizard Setup */}
+          <Route 
+            path="/onboarding" 
+            element={
+              <OnboardingRoute>
+                <Onboarding />
+              </OnboardingRoute>
+            } 
+          />
 
-        {/* Fallback redirect */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          {/* Fallback redirect */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </React.Suspense>
+
+      {/* Render Mobile Navigation bar globally on protected routes */}
+      {isAuthenticated && <MobileNav />}
     </div>
   );
 };
