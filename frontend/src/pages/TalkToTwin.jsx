@@ -81,6 +81,7 @@ How can I help you optimize your learning rhythm today?`,
   const [borderColor, setBorderColor] = useState('border-indigo-500/30');
   const [pulseDuration, setPulseDuration] = useState(3.6);
   const [pulseScale, setPulseScale] = useState([1, 1.05, 1]);
+  const [showAllSuggestions, setShowAllSuggestions] = useState(false);
 
   const messagesEndRef = useRef(null);
 
@@ -453,17 +454,26 @@ How can I help you optimize your learning rhythm today?`,
             </div>
 
             {/* Quick Suggestion Chips Container */}
-            <div className="px-5 py-3 border-t border-border bg-bg-secondary/30 flex flex-wrap gap-2 items-center chat-directives-panel">
+            <div className="px-4 py-2 sm:px-5 sm:py-3 border-t border-border bg-bg-secondary/30 flex flex-wrap gap-1.5 sm:gap-2 items-center chat-directives-panel">
               <span className="text-[9px] text-zinc-500 font-extrabold uppercase tracking-widest mr-1">Directives:</span>
               {suggestions.map((sug, i) => (
                 <button
                   key={i}
                   onClick={() => handleSendMessage(sug.query)}
-                  className="px-3 py-1.5 rounded-xl border border-border/80 hover:border-indigo-500/40 bg-card hover:bg-card-hover text-[10px] text-zinc-400 hover:text-indigo-650 dark:hover:text-white transition-all cursor-pointer font-bold select-none whitespace-nowrap hover:scale-[1.02]"
+                  className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl border border-border/80 hover:border-indigo-500/40 bg-card hover:bg-card-hover text-[9px] sm:text-[10px] text-zinc-400 hover:text-indigo-650 dark:hover:text-white transition-all cursor-pointer font-bold select-none whitespace-nowrap hover:scale-[1.02] active:scale-95 ${
+                    i >= 2 && !showAllSuggestions ? 'hidden md:inline-block' : 'inline-block'
+                  }`}
                 >
                   {sug.text}
                 </button>
               ))}
+              <button
+                type="button"
+                onClick={() => setShowAllSuggestions(!showAllSuggestions)}
+                className="md:hidden px-2.5 py-1 rounded-lg border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-[9px] text-indigo-400 hover:text-indigo-300 transition-all cursor-pointer font-extrabold select-none whitespace-nowrap active:scale-95"
+              >
+                {showAllSuggestions ? "Show Less ▴" : "+ More ▾"}
+              </button>
             </div>
 
             {/* Message Input Panel */}

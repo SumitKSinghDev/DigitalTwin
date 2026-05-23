@@ -354,25 +354,27 @@ const Tracker = ({ triggerTwinRefresh }) => {
         <AnimatePresence>
           {saveStatus === 'success' && (
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              className="fixed bottom-6 right-6 px-5 py-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-400 shadow-xl shadow-emerald-950/20 backdrop-blur-md flex items-center gap-3 z-[110]"
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              className="fixed bottom-20 sm:bottom-6 left-4 right-4 mx-auto sm:left-auto sm:right-6 sm:mx-0 w-fit max-w-[calc(100%-2rem)] px-5 py-3 rounded-full border shadow-lg backdrop-blur-md flex items-center justify-center gap-2.5 z-[110] transition-all duration-300 bg-emerald-50/95 dark:bg-emerald-950/90 border-emerald-200/50 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300 shadow-emerald-500/10 dark:shadow-emerald-950/40 pb-safe"
             >
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span>Digital Twin Telemetry Synced Successfully!</span>
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+              <span className="text-xs font-bold leading-none tracking-wide whitespace-nowrap">Digital Twin Telemetry Synced!</span>
             </motion.div>
           )}
 
           {saveStatus === 'error' && (
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              className="fixed bottom-6 right-6 px-5 py-3.5 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs font-bold text-rose-400 shadow-xl shadow-rose-950/20 backdrop-blur-md flex items-center gap-3 z-[110]"
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              className="fixed bottom-20 sm:bottom-6 left-4 right-4 mx-auto sm:left-auto sm:right-6 sm:mx-0 w-fit max-w-[calc(100%-2rem)] px-5 py-3 rounded-full border shadow-lg backdrop-blur-md flex items-center justify-center gap-2.5 z-[110] transition-all duration-300 bg-rose-50/95 dark:bg-rose-950/90 border-rose-200/50 dark:border-rose-500/30 text-rose-800 dark:text-rose-300 shadow-rose-500/10 dark:shadow-rose-950/40 pb-safe"
             >
-              <div className="w-2 h-2 rounded-full bg-rose-500" />
-              <span>Database Connection Error. Try saving again.</span>
+              <div className="w-2 h-2 rounded-full bg-rose-500 flex-shrink-0" />
+              <span className="text-xs font-bold leading-none tracking-wide whitespace-nowrap">Sync Error. Try again.</span>
             </motion.div>
           )}
         </AnimatePresence>
