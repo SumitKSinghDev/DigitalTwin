@@ -1073,7 +1073,11 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
                   </p>
                   <Link 
                     to="/tracker" 
-                    className="mt-4 px-4 py-1.5 bg-[#8B5CF6]/15 hover:bg-[#8B5CF6]/25 border border-[#8B5CF6]/35 hover:border-[#8B5CF6]/50 rounded-xl text-[10px] font-extrabold text-purple-300 uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-[0_0_12px_rgba(139,92,246,0.15)] active:scale-95"
+                    className={`mt-4 px-4 py-1.5 border rounded-xl text-[10px] font-extrabold uppercase tracking-wider transition-all duration-300 shadow-sm active:scale-95 ${
+                      theme === 'light'
+                        ? 'bg-indigo-50/50 hover:bg-indigo-100/50 border-indigo-200/60 text-indigo-600 hover:text-indigo-700 shadow-indigo-500/5'
+                        : 'bg-[#8B5CF6]/15 hover:bg-[#8B5CF6]/25 border-[#8B5CF6]/35 hover:border-[#8B5CF6]/50 text-purple-300 hover:shadow-[0_0_12px_rgba(139,92,246,0.15)]'
+                    }`}
                   >
                     Go to Tracker
                   </Link>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api.js';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext.jsx';
 import { 
   Calendar, 
   BookOpen, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 const Tracker = ({ triggerTwinRefresh }) => {
+  const { theme } = useTheme();
   const getLocalDateString = (d) => {
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -325,7 +327,11 @@ const Tracker = ({ triggerTwinRefresh }) => {
             </div>
 
             {/* Submit Bar */}
-            <div className="md:col-span-2 fixed bottom-16 md:static left-0 right-0 p-4 md:p-0 bg-[#0a0c10]/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-t border-border/60 md:border-0 shadow-[0_-8px_20px_rgba(0,0,0,0.3)] md:shadow-none flex items-center justify-between gap-4 z-[90] pb-safe">
+            <div className={`md:col-span-2 fixed bottom-16 md:static left-0 right-0 p-4 md:p-0 backdrop-blur-md md:backdrop-blur-none border-t md:border-0 md:shadow-none flex items-center justify-between gap-4 z-[90] pb-safe transition-all duration-300 ${
+              theme === 'light'
+                ? 'bg-white/90 border-slate-100/80 shadow-[0_-6px_20px_rgba(99,102,241,0.04)]'
+                : 'bg-[#0a0c10]/95 border-border/60 shadow-[0_-8px_20px_rgba(0,0,0,0.3)]'
+            }`}>
               <div className="hidden md:flex text-xs font-semibold text-zinc-500 items-center gap-2">
                 <Sparkles className="w-4 h-4 text-indigo-400" />
                 <span>Heuristic indicators update twin state calculations instantly.</span>

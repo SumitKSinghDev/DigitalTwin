@@ -29,9 +29,9 @@ const MobileHeader = ({ twinStatus }) => {
 
   return (
     <header
-      className={`md:hidden fixed top-0 left-0 right-0 h-14 border-b z-[100] flex items-center justify-between px-4 select-none shadow-sm transition-all duration-300 ${
+      className={`md:hidden fixed top-0 left-0 right-0 h-14 border-b z-[100] flex items-center justify-between px-4 select-none transition-all duration-300 ${
         theme === 'light'
-          ? 'bg-white/80 border-slate-200/50 shadow-slate-200/20 text-slate-900 backdrop-blur-md'
+          ? 'bg-white/95 border-slate-100 shadow-[0_2px_12px_rgba(99,102,241,0.04)] text-slate-900 backdrop-blur-md'
           : 'bg-[#0a0c10]/80 border-zinc-900/60 shadow-black/40 text-zinc-100 backdrop-blur-md'
       }`}
     >
@@ -42,7 +42,9 @@ const MobileHeader = ({ twinStatus }) => {
           <h1 className="text-xs font-black tracking-wider brand-text-gradient uppercase leading-none">
             DIGITAL TWIN
           </h1>
-          <p className="text-[7.5px] text-zinc-400 dark:text-zinc-500 uppercase tracking-widest font-black mt-0.5">
+          <p className={`text-[7.5px] uppercase tracking-widest font-black mt-0.5 ${
+            theme === 'light' ? 'text-slate-400' : 'text-zinc-400 dark:text-zinc-500'
+          }`}>
             STUDENT OS
           </p>
         </div>
