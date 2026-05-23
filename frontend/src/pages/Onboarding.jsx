@@ -93,18 +93,18 @@ const Onboarding = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            className="space-y-4"
           >
             <div>
-              <h2 className="text-2xl font-black text-white flex items-center gap-2 mb-2">
+              <h2 className="text-2xl font-black text-white flex items-center gap-2 mb-1.5">
                 <GraduationCap className="text-indigo-400 w-6 h-6" /> Academic Baseline
               </h2>
-              <p className="text-zinc-400 text-sm">
+              <p className="text-zinc-400 text-sm leading-relaxed">
                 Help your Digital Twin configure its behavioral base to match your study focus area and immediate milestones.
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div>
                 <label className="block text-zinc-350 dark:text-zinc-305 font-bold text-xs uppercase tracking-wider mb-2">
                   Academic Focus & Interests
@@ -147,23 +147,23 @@ const Onboarding = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            className="space-y-4"
           >
             <div>
-              <h2 className="text-2xl font-black text-white flex items-center gap-2 mb-2">
+              <h2 className="text-2xl font-black text-white flex items-center gap-2 mb-1.5">
                 <Clock className="text-indigo-400 w-6 h-6" /> Circadian Rhythm
               </h2>
-              <p className="text-zinc-400 text-sm">
+              <p className="text-zinc-400 text-sm leading-relaxed">
                 Your brain's peak focus window shifts naturally. Select your actual peak mental hours.
               </p>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div>
-                <label className="block text-zinc-300 font-bold text-xs uppercase tracking-wider mb-3">
+                <label className="block text-zinc-300 font-bold text-xs uppercase tracking-wider mb-2">
                   Preferred Study Slot
                 </label>
-                <div className="grid grid-cols-1 xs:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setPreferredStudyTiming('Morning')}
@@ -229,13 +229,13 @@ const Onboarding = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="space-y-6"
+            className="space-y-4"
           >
             <div>
-              <h2 className="text-2xl font-black text-white flex items-center gap-2 mb-2">
+              <h2 className="text-2xl font-black text-white flex items-center gap-2 mb-1.5">
                 <Gauge className="text-indigo-400 w-6 h-6" /> Cognitive Profile
               </h2>
-              <p className="text-zinc-400 text-sm">
+              <p className="text-zinc-400 text-sm leading-relaxed">
                 Define your productivity workflow style and fatigue limits so the AI behavioral engine can compute recommendations accurately.
               </p>
             </div>
@@ -381,7 +381,7 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen w-screen relative flex items-center justify-center bg-background px-4 py-8 overflow-hidden">
+    <div className="min-h-screen w-screen relative flex items-center justify-center bg-background px-4 pt-4 pb-12 sm:py-8 overflow-hidden">
       {/* Decorative Glow Canvas */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-purple-500/10 blur-[120px] pointer-events-none" />
@@ -391,7 +391,7 @@ const Onboarding = () => {
         <div className="bg-card dark:bg-zinc-900/60 backdrop-blur-xl border border-border dark:border-zinc-800/80 rounded-3xl p-5 xs:p-6 sm:p-8 shadow-2xl relative overflow-hidden">
           {/* Header Progress indicators */}
           {step < 4 && (
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
                 <BrainCircuit className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
                 <span className="text-sm font-black text-text-primary dark:text-white">Digital Twin Setup</span>
@@ -410,13 +410,13 @@ const Onboarding = () => {
           )}
 
           {/* Form screen container */}
-          <div className="min-h-[280px] flex flex-col justify-between">
+          <div className="min-h-0 flex flex-col justify-between">
             <AnimatePresence mode="wait">
               {renderStepContent()}
             </AnimatePresence>
 
             {/* Navigation buttons */}
-            <div className="flex items-center justify-between mt-8 border-t border-border dark:border-zinc-800/40 pt-6">
+            <div className="flex items-center justify-between mt-6 border-t border-border dark:border-zinc-800/40 pt-4 pb-safe">
               {step < 4 ? (
                 <>
                   <button

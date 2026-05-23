@@ -37,7 +37,7 @@ const MobileNav = () => {
             key={item.name}
             to={item.path}
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center flex-1 h-full py-1.5 transition-all duration-200 relative group active:scale-95 ${
+              `flex flex-col items-center justify-center flex-1 h-full py-1 transition-all duration-200 relative group active:scale-95 ${
                 isActive
                   ? (theme === 'light'
                       ? 'text-[#4F46E5] font-bold scale-105'
@@ -50,15 +50,15 @@ const MobileNav = () => {
           >
             {({ isActive }) => (
               <>
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                <span className="text-[8px] uppercase tracking-wider font-extrabold mt-1 select-none">
+                <Icon className="w-[18px] h-[18px] flex-shrink-0 transition-transform group-hover:scale-105" />
+                <span className="text-[7.5px] uppercase tracking-widest font-black mt-0.5 select-none opacity-90 leading-none">
                   {item.name}
                 </span>
                 
                 {/* Active Indicator Micro-Glow Dot */}
                 {isActive && (
                   <span 
-                    className={`absolute bottom-1 w-1 h-1 rounded-full animate-pulse ${
+                    className={`absolute bottom-0.5 w-1 h-1 rounded-full animate-pulse ${
                       theme === 'light' ? 'bg-[#4F46E5] shadow-[0_0_8px_#4F46E5]' : 'bg-indigo-400 shadow-[0_0_8px_#818CF8]'
                     }`}
                   />

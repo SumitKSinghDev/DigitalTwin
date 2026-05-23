@@ -523,6 +523,23 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
   const [timeframe, setTimeframe] = useState('7');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showSuggestion, setShowSuggestion] = useState(true);
+  const [showFloatingButton, setShowFloatingButton] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setShowFloatingButton(false);
+      } else {
+        setShowFloatingButton(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   const timeframeLabels = {
     '7': 'This Week',
@@ -707,12 +724,12 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
           className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-border/40 pb-4"
         >
           <div>
-            <h1 className={`text-xl sm:text-2xl md:text-3xl font-black tracking-tight flex flex-wrap items-center gap-1.5 ${
+            <h1 className={`text-lg xs:text-xl sm:text-2xl md:text-3xl font-black tracking-tight flex items-center gap-1.5 max-w-full overflow-hidden ${
               theme === 'light' ? 'text-slate-900' : 'text-white'
             }`}>
-              <span>Good Evening,</span>
-              <span className="truncate max-w-[160px] xs:max-w-[220px] sm:max-w-none">{user?.username || 'Sumit'}</span>
-              <span>! 👋</span>
+              <span className="flex-shrink-0">Good Evening,</span>
+              <span className="truncate max-w-[120px] xs:max-w-[180px] sm:max-w-[280px] md:max-w-none">{user?.username || 'Sumit'}</span>
+              <span className="flex-shrink-0">! 👋</span>
             </h1>
             <p className={`text-xs font-semibold uppercase tracking-wider mt-1 flex items-center gap-1.5 ${
               theme === 'light' ? 'text-slate-500' : 'text-zinc-400'
@@ -1435,56 +1452,66 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
       </motion.div>
 
       {/* Floating "Talk to Twin" CTA with contextual prompt popover */}
-      <div className="fixed bottom-6 right-6 z-[99] flex flex-col items-end gap-3 pointer-events-none">
-        <AnimatePresence>
-          {showSuggestion && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0, transition: { delay: 3.5, type: "spring", stiffness: 100 } }}
-              exit={{ opacity: 0, scale: 0.9, y: 10, transition: { delay: 0, duration: 0.2 } }}
-              className={`p-3.5 pr-8 rounded-2xl shadow-2xl max-w-xs pointer-events-auto flex items-start gap-2.5 relative overflow-hidden border ${
-                theme === 'light' ? 'bg-card border-border shadow-indigo-500/5' : 'bg-[#1A1D26] border-[#2A3142] shadow-black/75'
-              }`}
-            >
-              <div className="absolute -left-6 -bottom-6 w-12 h-12 bg-blue-500/5 rounded-full blur-xl animate-pulse" />
-              <div className="p-1.5 bg-blue-500/10 border border-blue-500/20 rounded-xl text-primary animate-bounce mt-0.5">
-                <Sparkles className="w-3.5 h-3.5" />
-              </div>
-              <div className="space-y-0.5">
-                <p className="text-[9px] font-extrabold text-blue-400 uppercase tracking-wider">Twin Suggestion</p>
-                <p className="text-[10px] text-zinc-300 font-semibold leading-relaxed">
-                  {twinData.burnout.score > 50 
-                    ? "Ask your twin how to reduce burnout risk."
-                    : "Talk to Twin about optimizing your late study sprints."}
-                </p>
-              </div>
-              
-              <button
-                onClick={() => setShowSuggestion(false)}
-                className="absolute top-2.5 right-2.5 text-zinc-400 hover:text-zinc-200 transition-colors p-0.5 rounded-full hover:bg-white/10 dark:hover:bg-zinc-800"
-                aria-label="Dismiss suggestion"
-              >
-                <X className="w-3 h-3" />
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2.2, type: "spring", stiffness: 110 }}
-          className="pointer-events-auto shadow-[0_8px_30px_rgba(59,130,246,0.22)] rounded-full hover:shadow-[0_8px_35px_rgba(59,130,246,0.35)] transition-shadow duration-300"
-        >
-          <Link 
-            to="/talk"
-            className="flex items-center gap-2.5 px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-full text-xs font-black shadow-md active:scale-95 transition-all select-none border border-blue-400/20"
+      <AnimatePresence>
+        {showFloatingButton && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.85, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.85, y: 15 }}
+            transition={{ type: "spring", stiffness: 120, damping: 18 }}
+            className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-[99] flex flex-col items-end gap-2.5 pointer-events-none"
           >
-            <Brain className="w-4 h-4 animate-pulse text-blue-100" />
-            <span>Talk to Twin</span>
-          </Link>
-        </motion.div>
-      </div>
+            <AnimatePresence>
+              {showSuggestion && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0, transition: { delay: 1.5, type: "spring", stiffness: 100 } }}
+                  exit={{ opacity: 0, scale: 0.9, y: 10, transition: { delay: 0, duration: 0.2 } }}
+                  className={`p-3.5 pr-8 rounded-2xl shadow-2xl max-w-xs pointer-events-auto flex items-start gap-2.5 relative overflow-hidden border ${
+                    theme === 'light' ? 'bg-card border-border shadow-indigo-500/5' : 'bg-[#1A1D26] border-[#2A3142] shadow-black/75'
+                  }`}
+                >
+                  <div className="absolute -left-6 -bottom-6 w-12 h-12 bg-blue-500/5 rounded-full blur-xl animate-pulse" />
+                  <div className="p-1.5 bg-blue-500/10 border border-blue-500/20 rounded-xl text-primary animate-bounce mt-0.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-[9px] font-extrabold text-blue-400 uppercase tracking-wider">Twin Suggestion</p>
+                    <p className="text-[10px] text-zinc-300 font-semibold leading-relaxed">
+                      {twinData.burnout.score > 50 
+                        ? "Ask your twin how to reduce burnout risk."
+                        : "Talk to Twin about optimizing your late study sprints."}
+                    </p>
+                  </div>
+                  
+                  <button
+                    onClick={() => setShowSuggestion(false)}
+                    className="absolute top-2.5 right-2.5 text-zinc-400 hover:text-zinc-200 transition-colors p-0.5 rounded-full hover:bg-white/10 dark:hover:bg-zinc-800"
+                    aria-label="Dismiss suggestion"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, type: "spring", stiffness: 110 }}
+              className="pointer-events-auto shadow-[0_8px_30px_rgba(59,130,246,0.22)] rounded-full hover:shadow-[0_8px_35px_rgba(59,130,246,0.35)] transition-shadow duration-300"
+            >
+              <Link 
+                to="/talk"
+                className="flex items-center justify-center gap-2 w-12 h-12 md:w-auto md:h-auto p-0 md:px-5 md:py-3.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-full text-xs font-black shadow-md active:scale-95 transition-all select-none border border-blue-400/20 md:shadow-[0_4px_15px_rgba(59,130,246,0.2)] shadow-none focus:outline-none"
+              >
+                <Brain className="w-4 h-4 animate-pulse text-blue-100 flex-shrink-0" />
+                <span className="hidden md:inline">Talk to Twin</span>
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

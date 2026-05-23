@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthContext, AuthProvider } from './context/AuthContext.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import api from './utils/api.js';
@@ -67,6 +67,8 @@ const OnboardingRoute = ({ children }) => {
 
 const AppContent = () => {
   const { isAuthenticated, user, loading: authLoading } = useContext(AuthContext);
+  const location = useLocation();
+  const isOnboarding = location.pathname === '/onboarding';
   
   // Collapsible sidebar state (persisted in localStorage)
   const [isCollapsed, setIsCollapsed] = useState(() => {
@@ -251,7 +253,7 @@ const AppContent = () => {
       </React.Suspense>
 
       {/* Render Mobile Navigation bar globally on protected routes */}
-      {isAuthenticated && <MobileNav />}
+      {isAuthenticated && !isOnboarding && <MobileNav />}
     </div>
   );
 };
