@@ -929,21 +929,19 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
               theme === 'light' ? '' : 'hover:border-[#2A3142]'
             }`}
           >
-            <div className="flex justify-between items-center border-b border-border pb-3.5">
-              <div className="space-y-1">
-                <h2 className="text-sm font-extrabold text-white flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-purple-400" />
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-border pb-3.5">
+              <div className="space-y-1.5 w-full">
+                <h2 className="text-sm font-extrabold text-white flex flex-wrap items-center gap-2">
+                  <Activity className="w-4 h-4 text-purple-400 flex-shrink-0" />
                   <span>Logged Study Analytics</span>
-                </h2>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <p className="text-xs text-zinc-500 font-medium">Daily study sprint allocation & learning duration.</p>
-                  <span className="text-[9px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded-md font-extrabold select-none uppercase tracking-wider">
+                  <span className="text-[8px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded font-extrabold select-none uppercase tracking-wider flex-shrink-0">
                     +12% vs last cycle
                   </span>
-                </div>
+                </h2>
+                <p className="text-xs text-zinc-500 font-medium leading-relaxed">Daily study sprint allocation & learning duration.</p>
               </div>
               
-              <div className="relative">
+              <div className="relative w-full sm:w-auto flex justify-end sm:block">
                 <button 
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="flex items-center gap-1.5 px-3 py-1.5 bg-background border border-border/80 hover:border-primary/50 rounded-xl text-xs font-bold text-zinc-300 transition-all active:scale-95 shadow-md select-none"
@@ -1135,22 +1133,22 @@ const Dashboard = ({ twinData, loadingTwin, goalsCount }) => {
             variants={itemVariants} 
             className="glass-panel-elevated panel-tint-neutral p-6 flex flex-col justify-between space-y-4 transition-all duration-300"
           >
-            <div className="space-y-1 border-b border-border pb-3.5">
-              <div className="flex justify-between items-start">
+            <div className="space-y-2.5 border-b border-border pb-3.5">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5">
                 <h2 className="text-sm font-extrabold text-white flex items-center gap-2">
-                  <Brain className="w-4 h-4 text-purple-400" />
+                  <Brain className="w-4 h-4 text-purple-400 flex-shrink-0" />
                   <span>Focus Heatmap</span>
                 </h2>
-                <div className="flex flex-col items-end gap-1 select-none">
-                  <span className="text-[9px] font-extrabold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.1)]">
+                <div className="flex flex-wrap items-center sm:items-end gap-2 sm:gap-1 sm:flex-col select-none">
+                  <span className="text-[9px] font-extrabold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.1)] flex-shrink-0">
                     +18% above weekly baseline
                   </span>
-                  <span className="text-[8px] font-extrabold text-zinc-500 uppercase tracking-widest mt-0.5">
+                  <span className="text-[8px] font-extrabold text-zinc-500 uppercase tracking-widest flex-shrink-0">
                     Peak: 8 PM - 10 PM
                   </span>
                 </div>
               </div>
-              <p className="text-xs text-zinc-500 font-medium">Visualizing hourly focus concentration index.</p>
+              <p className="text-xs text-zinc-500 font-medium leading-relaxed">Visualizing hourly focus concentration index.</p>
               
               {/* Behavior Insight Banner */}
               <div className="mt-3.5 p-3 rounded-xl bg-purple-500/5 border border-purple-500/10 flex items-start gap-2.5 relative overflow-hidden group select-none behavior-insight-banner">
