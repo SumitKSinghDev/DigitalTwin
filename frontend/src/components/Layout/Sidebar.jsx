@@ -32,7 +32,7 @@ const Sidebar = ({ twinStatus, isCollapsed, onToggleCollapse }) => {
     { name: 'Daily Tracker', path: '/tracker', icon: ClipboardList },
     { name: 'Analytics Hub', path: '/analytics', icon: BarChart3 },
     { name: 'Goals Board', path: '/goals', icon: Target },
-    { name: 'AI Twin Deep-Dive', path: '/insights', icon: Sparkles },
+    { name: 'Digital Twin Deep-Dive', path: '/insights', icon: Sparkles },
   ];
 
   // Helper to color-code the sidebar twin status dot

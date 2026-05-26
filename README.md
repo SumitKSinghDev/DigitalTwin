@@ -1,4 +1,4 @@
-# 🧠 Student Digital Twin: Predictive Telemetry & AI Diagnostic Core
+# 🧠 Digital Twin: Predictive Telemetry & AI Diagnostic Core
 
 An advanced, premium-tier full-stack MERN & Python FastAPI platform that implements a virtual intelligent twin of a student. By continuously observing and analyzing study habits, focus concentration, task completion metrics, sleep recovery ratios, and stress telemetry, the platform generates personalized, real-time diagnostic insights, natural language behavioral summaries, and deep predictive forecasts.
 

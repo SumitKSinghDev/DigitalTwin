@@ -70,7 +70,7 @@ const Insights = ({ twinData, loadingTwin }) => {
         {/* Title Header */}
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400 bg-clip-text text-transparent">
-            AI Twin Deep-Dive
+            Digital Twin Deep-Dive
           </h1>
           <p className="text-zinc-500 text-sm mt-1">
             Examine growth forecasts, study habit stability, and automated stress recovery logs.

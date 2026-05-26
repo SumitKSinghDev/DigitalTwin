@@ -331,7 +331,7 @@ const Auth = () => {
               <Logo className="w-9 h-9" />
             </div>
             <div>
-              <span className="text-sm font-bold tracking-widest text-zinc-200">STUDENT TWIN</span>
+              <span className="text-sm font-bold tracking-widest text-zinc-200">DIGITAL TWIN</span>
               <p className="text-[9px] text-zinc-500 font-semibold tracking-wider uppercase">Virtual Intelligent System</p>
             </div>
           </div>
@@ -434,10 +434,10 @@ const Auth = () => {
           {/* Bottom text */}
           <div className="space-y-3">
             <h2 className="text-xl font-extrabold tracking-tight text-zinc-100 leading-tight">
-              Analyze Your Behavioral Blueprint
+              Track behavior. Not just hours.
             </h2>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              Track focus patterns, monitor burnout signals, and build an AI-powered behavioral profile tailored to your learning habits.
+              Build your AI Student Digital Twin. Observe focus patterns, calculate burnout probability, and calibrate your daily study parameters dynamically.
             </p>
           </div>
         </div>
